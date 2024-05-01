@@ -2,6 +2,10 @@
 * LOGIN
 */
 
+:root {
+  --background-image: url("../../img/login-cover.png");
+}
+
 /* Defaults */
 label {
   display: block;
@@ -54,6 +58,10 @@ button:disabled {
 .login-container {
   display: flex;
   min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-image: var(--background-image);
 }
 
 .login-form {
@@ -77,7 +85,7 @@ button:disabled {
 }
 
 .login-cover {
-  background-image: url("../../img/login-cover.png");
+  background-image: var(--background-image);
   background-size: cover;
   background-position: center;
   background-color: #eee;

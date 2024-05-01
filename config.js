@@ -16,6 +16,8 @@ const config = {
     folder: "Corporate/TPM",
     login: {
         redirectUrl: "projects.html",
+        // Set this to left, center, or right to position the login form on the page
+        columnLocation: "right",
     },
     logout: {
         redirectUrl: "index.html",
@@ -91,11 +93,12 @@ const config = {
             href: "query?DWConstantForm=PasswordReset",
         },
     ],
-    logo: {
+    image: {
         // login: "dist/img/logo-dark.svg",
         login: "dist/img/tpm_logo_color.png",
         // sidebar: "dist/img/logo-light.svg",
         sidebar: "dist/img/tpm_logo_white.png",
+        loginCover: "dist/img/login-cover.png",
     },
 
 };
