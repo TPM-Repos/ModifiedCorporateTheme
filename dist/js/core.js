@@ -142,7 +142,7 @@ function logoutRedirect() {
     localStorage.clear();
 
     // Redirect
-    window.location.replace(config.logout.redirectUrl);
+    window.location.replace(config.imageut.redirectUrl);
 }
 
 /**
@@ -372,8 +372,8 @@ function hidePasswordReset() {
 function setLogo() {
     const logo = document.getElementById("logo");
 
-    if (logo && config.logo.sidebar) {
-        logo.src = config.logo.sidebar;
+    if (logo && config.image.sidebar) {
+        logo.src = config.image.sidebar;
         return;
     }
 }

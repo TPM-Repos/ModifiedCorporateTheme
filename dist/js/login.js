@@ -29,6 +29,7 @@ let client;
  */
 (async function () {
     setLogo();
+    setLoginCover();
 
     loginForm.addEventListener("submit", handleLoginForm);
 
@@ -53,6 +54,7 @@ let client;
         }
     }
     showLoginNotice();
+    setLoginColumnLocation();
 })();
 
 /**
@@ -346,7 +348,49 @@ function handleGenericError(error) {
 function setLogo() {
     const logo = document.getElementById("logo");
 
-    if (logo && config.logo.login) {
-        logo.src = config.logo.login;
+    if (logo && config.image.login) {
+        logo.src = config.image.login;
+    }
+}
+
+/**
+ * Set the loginCover
+ */
+function setLoginCover() {
+    if (config.image.loginCover) {
+        document.documentElement.style.setProperty("--background-image", `url(${"../../../" + config.image.loginCover})`);
+    }
+}
+
+function setLoginColumnLocation() {
+    if(!config.login.columnLocation) {
+        return;
+    }
+
+    if(config.login.columnLocation === "") {
+        return;
+    }
+
+    const loginContainer = document.querySelector(".login-container");
+
+    if(config.login.columnLocation === "left") {
+        loginContainer.style.flexDirection = "row";
+        return;
+    }
+
+    if(config.login.columnLocation === "right") {
+        loginContainer.style.flexDirection = "row-reverse";
+        return;
+    }
+
+    if(config.login.columnLocation === "center") {
+        const loginForm = loginContainer.querySelector("#login-form");
+        const loginCover = loginContainer.querySelector(".login-cover");
+        loginContainer.style.justifyContent = "center";
+        loginContainer.style.backgroundImage = config.image.loginCover;
+
+        loginCover.style.display = "none";
+
+        return;
     }
 }
