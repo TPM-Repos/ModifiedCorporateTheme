@@ -93,12 +93,22 @@ const config = {
             href: "query?DWConstantForm=PasswordReset",
         },
     ],
-    image: {
+    images: {
         // login: "dist/img/logo-dark.svg",
         login: "dist/img/tpm_logo_color.png",
         // sidebar: "dist/img/logo-light.svg",
         sidebar: "dist/img/tpm_logo_white.png",
         loginCover: "dist/img/login-cover.png",
+        carousel: {
+            enabled: true,
+            interval: 7.5,
+            images: [
+                "dist/img/carousel-1.jpg",
+                "dist/img/carousel-2.jpg",
+                "dist/img/carousel-3.jpg",
+                "dist/img/carousel-4.jpg",
+            ],
+        }
     },
 
 };
