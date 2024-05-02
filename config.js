@@ -3,17 +3,17 @@
 const config = {
     // the full path the site running the DriveWorks Live API
     // serverUrl: "https://dw21api.yourdomain.com",
-    serverUrl: "",
+    serverUrl: "http://localhost:81/",
     // The default alias for the DriveWorks Group
     // This is a custom string that must match the name in the ConfigUser.xml file
-    groupAlias: "",
+    groupAlias: "AC",
     // (Optional) Configure ping & update intervals - in seconds
     // A Specification will timeout after a configured period of inactivity (see DriveWorksConfigUser.xml).
     // This function prevents a Specification timing out as long as the page is in view.
     // Disable the ping by setting to 0
     specificationPingInterval: 0,
     // (Optional) Enter custom redirect URLs for login/logout and Project/DriveApp close/cancel
-    folder: "Corporate/TPM",
+    folder: "",
     login: {
         redirectUrl: "projects.html",
         // Set this to left, center, or right to position the login form on the page
@@ -47,8 +47,8 @@ const config = {
     // Enter a default Group Alias and/or Project name to be used (when none are passed in the query string)
     // Choose how sessions are handled
     query: {
-        defaultGroupAlias: "",
-        defaultProjectName: "",
+        defaultGroupAlias: "AC query",
+        defaultProjectName: "AccountManagement",
         autoLogin: false,
         requireNewSession: true,
         requireExactAlias: false,
