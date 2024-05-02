@@ -280,3 +280,25 @@ button:disabled {
   position: relative;
   top: .5em;
 }
+
+
+.login-cover {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.login-cover img {
+  position: absolute;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 2.5s ease-in-out;
+}
+
+.login-cover img.active {
+  opacity: 1;
+}

@@ -30,6 +30,7 @@ let client;
 (async function () {
     setLogo();
     setLoginCover();
+    addCarouselImages();
 
     loginForm.addEventListener("submit", handleLoginForm);
 
@@ -221,7 +222,7 @@ function loginError(noticeText, error = null) {
  * @param {string} [state] - The type of message state (error/success/info).
  */
 function setLoginNotice(text, state = "info") {
-    const notice = JSON.stringify({text: text, state: state});
+    const notice = JSON.stringify({ text: text, state: state });
     localStorage.setItem("loginNotice", notice);
 }
 
@@ -348,8 +349,8 @@ function handleGenericError(error) {
 function setLogo() {
     const logo = document.getElementById("logo");
 
-    if (logo && config.image.login) {
-        logo.src = config.image.login;
+    if (logo && config.images.login) {
+        logo.src = config.images.login;
     }
 }
 
@@ -357,40 +358,89 @@ function setLogo() {
  * Set the loginCover
  */
 function setLoginCover() {
-    if (config.image.loginCover) {
-        document.documentElement.style.setProperty("--background-image", `url(${"../../../" + config.image.loginCover})`);
+    if (config.images.loginCover) {
+        document.documentElement.style.setProperty("--background-image", `url(${"../../../" + config.images.loginCover})`);
     }
 }
 
 function setLoginColumnLocation() {
-    if(!config.login.columnLocation) {
+    if (!config.login.columnLocation) {
         return;
     }
 
-    if(config.login.columnLocation === "") {
+    if (config.login.columnLocation === "") {
         return;
     }
 
     const loginContainer = document.querySelector(".login-container");
 
-    if(config.login.columnLocation === "left") {
+    if (config.login.columnLocation === "left") {
         loginContainer.style.flexDirection = "row";
         return;
     }
 
-    if(config.login.columnLocation === "right") {
+    if (config.login.columnLocation === "right") {
         loginContainer.style.flexDirection = "row-reverse";
         return;
     }
 
-    if(config.login.columnLocation === "center") {
+    if (config.login.columnLocation === "center") {
         const loginForm = loginContainer.querySelector("#login-form");
         const loginCover = loginContainer.querySelector(".login-cover");
         loginContainer.style.justifyContent = "center";
-        loginContainer.style.backgroundImage = config.image.loginCover;
+        loginContainer.style.backgroundImage = config.images.loginCover;
 
         loginCover.style.display = "none";
 
         return;
     }
 }
+
+function addCarouselImages() {
+    if(!config.images.carousel || config.images.carousel.enabled === false) {
+        return;
+    }
+
+    const loginCover = document.querySelector(".login-cover");
+
+    config.images.carousel.images.forEach((image) => {
+        const img = document.createElement("img");
+        img.src = image;
+        loginCover.appendChild(img);
+    });
+
+    loginCover.firstElementChild.classList.add("active");
+
+    interval = 7500;
+
+    if(config.images.carousel.interval) {
+        interval = config.images.carousel.interval * 1000;
+    }
+
+    // call the transitionImages function every X seconds (milliseconds)
+    setInterval(transitionImages, interval);
+}
+
+
+// a function to transition the opacity of the images every X seconds
+function transitionImages() {
+    const images =
+        document.querySelectorAll(".login-cover img");
+    const activeImage = document.querySelector(
+        ".login-cover img.active"
+    );
+
+    // get the index of the active image
+    const activeIndex = Array.from(images).indexOf(activeImage);
+
+    // remove the active class from the active image
+    activeImage.classList.remove("active");
+
+    // get the next image in the array
+    const nextImage = images[(activeIndex + 1) % images.length];
+
+    // add the active class to the next image
+    nextImage.classList.add("active");
+}
+
+
