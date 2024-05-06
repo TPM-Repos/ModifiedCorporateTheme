@@ -15,7 +15,7 @@ Join our [online community](https://my.driveworks.co.uk) for discussion, resourc
 ---
 
 ### Overview:
-- Dynamically injects the DriveWorks Live Client library script using the configured server url (see `config.js`).
+- Dynamically injects the DriveWorks Live Client library script using the configured server url (see `configUser.js`).
     - Provides an example of loading from a static URL, if preferred.
 - Connects to the DriveWorks Live Integration Theme API.
 - 'Login' view.
@@ -55,7 +55,7 @@ Join our [online community](https://my.driveworks.co.uk) for discussion, resourc
 ### To use:
 1. Clone this repository, or download as a `.zip` file.
 
-2. Enter your Integration Theme details into `config.js`.
+2. Enter your Integration Theme details into `configUser.js`.
     * `serverUrl` - The URL that hosts your Integration Theme, including any ports.
     * `groupAlias` - The public alias created for the Group containing the data to display - as configured in `DriveWorksConfigUser.xml`.
         * This *must* be specified for each Group you wish to use.

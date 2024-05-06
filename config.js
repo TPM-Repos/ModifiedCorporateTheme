@@ -1,4 +1,4 @@
-// Update these values to match those of your Server URL & DriveWorks Group Alias
+// COPY THIS FILE TO 'configUser.js' AND UPDATE THE VALUES TO MATCH YOUR SERVER URL & GROUP ALIAS
 
 const config = {
     // the full path the site running the DriveWorks Live API
@@ -32,7 +32,7 @@ const config = {
     },
     // (Optional) Configure 'Run' view
     run: {
-        showWarningOnExit: false, // Toggle warning dialog when exiting "Run" view with potentially unsaved changes (where supported)
+        showWarningOnExit: true, // Toggle warning dialog when exiting "Run" view with potentially unsaved changes (where supported)
         loadCustomProjectAssets: {
             scripts: false,
             styles: false,
@@ -87,20 +87,28 @@ const config = {
             icon: "history",
             href: "history.html",
         },
-        {
-            title: "Reset Password",
-            icon: "reset",
-            href: "query?DWConstantForm=PasswordReset",
-        },
+        // {
+        //     title: "Reset Password",
+        //     icon: "reset",
+        //     href: "query?DWConstantForm=PasswordReset",
+        // },
     ],
     images: {
+        // You may use a different (or same) company logo for the login and sidebar
+        // You may wish to do this due to the color of the logo and contrast with the background color
+        // Here is an example with svgs and with pngs
         // login: "dist/img/logo-dark.svg",
-        login: "dist/img/tpm_logo_color.png",
         // sidebar: "dist/img/logo-light.svg",
+        login: "dist/img/tpm_logo_color.png",
         sidebar: "dist/img/tpm_logo_white.png",
+        // By default the login screen will show a static cover image
+        // You can change it to a different image here.
         loginCover: "dist/img/login-cover.png",
+        // You can use a series of images instead of a static cover image by enabling the carousel
+        // These will fade into the next image every 'interval' seconds
+        // You may use as many as you want but the more you use the longer the page will take to load
         carousel: {
-            enabled: true,
+            enabled: false,
             interval: 7.5,
             images: [
                 "dist/img/carousel-1.jpg",

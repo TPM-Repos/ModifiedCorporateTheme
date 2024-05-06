@@ -321,7 +321,7 @@ const dateTimeFormat = new Intl.DateTimeFormat(config.locale, config.dateFormat)
 
 /**
  * Convert DateTime string to localized string
- * This uses the options in config.js
+ * This uses the options in configUser.js
  * @param {string} dateTime
  * @return {string}
  */

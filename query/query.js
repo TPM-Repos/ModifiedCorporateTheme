@@ -58,7 +58,7 @@
 // Enable console output to assist debugging
 const DEBUG_MODE = false;
 
-// Load settings from config file (config.js)
+// Load settings from config file (configUser.js)
 const REQUIRE_NEW_SESSION = config.query.requireNewSession;
 const REQUIRE_EXACT_ALIAS = config.query.requireExactAlias;
 const SERVER_URL = config.serverUrl;
@@ -124,7 +124,7 @@ class SessionManager {
         // Get Group Alias from query
         const queryAlias = urlQuery.get("alias") || urlQuery.get("Alias") || urlQuery.get("user") || urlQuery.get("User");
         if (queryAlias) {
-            groupAlias = queryAlias;   // Override the default Group Alias (if set in config.js)
+            groupAlias = queryAlias;   // Override the default Group Alias (if set in configUser.js)
             autoLogin = true;           // If a Group Alias is specified, it should be treated as an automatic login.
         }
 
