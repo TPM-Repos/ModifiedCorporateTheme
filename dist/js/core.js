@@ -142,7 +142,7 @@ function logoutRedirect() {
     localStorage.clear();
 
     // Redirect
-    window.location.replace(config.imagesut.redirectUrl);
+    window.location.replace(config.logout.redirectUrl);
 }
 
 /**
