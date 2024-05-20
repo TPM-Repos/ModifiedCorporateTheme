@@ -109,7 +109,7 @@ function renderError(message, error = null) {
 
     // Redirect to configured cancel location
     setTimeout(() => {
-        window.location.href = currentConfig.redirectOnCancel;
+        redirectOnSpecAction("cancel");
     }, 2000);
 }
 
@@ -633,7 +633,7 @@ async function invokeTransition(transitionName) {
         if (redirectAfterTransition) {
             detachPageUnloadDialog();
 
-            window.location.href = `${currentConfig.redirectOnClose}?specification=${rootSpecificationId}`;
+            redirectOnSpecAction("close")
         }
     } catch (error) {
         handleGenericError(error);
@@ -671,7 +671,7 @@ function formUpdated(event) {
 function formClosed() {
     detachPageUnloadDialog();
 
-    window.location.href = `${currentConfig.redirectOnClose}?specification=${rootSpecificationId}`;
+    redirectOnSpecAction("close")
 }
 
 /**
@@ -680,7 +680,7 @@ function formClosed() {
 function formCancelled() {
     detachPageUnloadDialog();
 
-    window.location.href = currentConfig.redirectOnCancel;
+    redirectOnSpecAction("cancel");
 }
 
 /**
@@ -689,15 +689,33 @@ function formCancelled() {
 function existingSpecificationClosed() {
     detachPageUnloadDialog();
 
-    window.location.href = `${currentConfig.redirectOnClose}?specification=${rootSpecificationId}`;
+    redirectOnSpecAction("close")
 }
 
 /**
  * Existing Specification cancelled.
  */
 function existingSpecificationCancelled() {
-    window.location.href = `${currentConfig.redirectOnClose}?specification=${rootSpecificationId}`;
+    redirectOnSpecAction("close")
 }
+
+/**
+ * Redirect On Close
+ */
+function redirectOnSpecAction(action = "close") {
+    // if project is AccountManagement, then logout
+    if (QUERY_PROJECT_NAME === "AccountManagement") {
+        handleLogout();
+        return;
+    }
+    if(action === "close") {
+        page = currentConfig.redirectOnClose;
+    } else if(action === "cancel") {
+        page = currentConfig.redirectOnCancel;
+    }
+    window.location.href = `${page}?specification=${rootSpecificationId}`;
+}
+
 
 /**
  * Hide Form loading state.
