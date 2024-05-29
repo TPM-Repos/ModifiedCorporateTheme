@@ -25,6 +25,7 @@ let client;
     showUsername();
     attachLogoutActions();
     detectTouchDevice();
+    setWatermark();
     handleMobileNavigationToggle();
     hidePasswordReset();
 })();
@@ -380,5 +381,21 @@ function setLogo() {
         logo.src = config.images.sidebar;
         return;
     }
+}
+
+function setWatermark() {
+    if (!config.watermark) {
+        return;
+    }
+
+    const contentInner = document.querySelector(".content-inner");
+    const watermark = document.createElement("div");
+    watermark.classList.add("watermark");
+    // if the page is run.html, add a class to the watermark
+    if (window.location.pathname.includes("run.html")) {
+        watermark.classList.add("sideways");
+    }
+    watermark.innerHTML = config.watermark;
+    contentInner.prepend(watermark);
 }
 
