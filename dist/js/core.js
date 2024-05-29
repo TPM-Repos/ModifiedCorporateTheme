@@ -1,3 +1,4 @@
+// Version 1.2.1
 /**
  * SHARED CORE PAGE FUNCTIONS
  */
@@ -15,6 +16,9 @@ let client;
  * Run on page load.
  */
 (() => {
+    console.log("This site is running Modified Corporate Theme from TPM");
+    console.log("You can learn more here: https://github.com/TPM-Repos/ModifiedCorporateTheme");
+    console.log("Version: " + config.version);
     // Check if Session Id exists
     checkStoredSessionId();
     setLogo();

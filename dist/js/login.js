@@ -1,3 +1,4 @@
+// Version 1.2.1
 /**
  * LOGIN
  */
@@ -29,6 +30,9 @@ let client;
  * On page load.
  */
 (async function () {
+    console.log("This site is running Modified Corporate Theme from TPM");
+    console.log("You can learn more here: https://github.com/TPM-Repos/ModifiedCorporateTheme");
+    console.log("Version: " + config.version);
     setLogo();
     setLoginCover();
     addCarouselImages();
