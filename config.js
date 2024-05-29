@@ -63,6 +63,9 @@ const config = {
     // Add a watermark over pages in order to indicate that the site is a development site
     // comment out or set to "" to disable
     watermark: "Development Site",
+    // Set the title of the site, this will be displayed in the browser tab
+    // pageName | siteName
+    siteName: "TPM",
     loginReturnUrls: true, // Toggle appending return urls to restore the previous location when redirected to the login form
     locale: "en-US", // Set the default locale for displaying dates and numbers
     dateFormat: {
