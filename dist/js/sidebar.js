@@ -1,26 +1,4 @@
-sidebarLinks: [
-    {
-        title: "Projects",
-        icon: "projects",
-        href: "projects.html",
-    },
-    {
-        title: "DriveApps",
-        icon: "drive-apps",
-        href: "drive-apps.html",
-    },
-    {
-        title: "History",
-        icon: "history",
-        href: "history.html",
-    },
-    {
-        title: "Reset Password",
-        icon: "reset",
-        href: "query?DWConstantForm=PasswordReset",
-    },
-]
-
+// Version 1.2.1
 
 /**
  * @param {string} title The text to display in the sidebar

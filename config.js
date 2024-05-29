@@ -1,6 +1,8 @@
 // COPY THIS FILE TO 'configUser.js' AND UPDATE THE VALUES TO MATCH YOUR SERVER URL & GROUP ALIAS
+// Version 1.2.0
 
 const config = {
+    version: "1.2.0",
     // the full path the site running the DriveWorks Live API
     // serverUrl: "https://dw21api.yourdomain.com",
     serverUrl: "",
