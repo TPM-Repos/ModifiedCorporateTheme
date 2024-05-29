@@ -9,9 +9,19 @@
 	console.log("This site is running Modified Corporate Theme from TPM");
 	console.log("You can learn more here: https://github.com/TPM-Repos/ModifiedCorporateTheme");
 	console.log("Version: " + config.version);
+	setTitle();
 	setLogo();
 	setWatermark();
 })();
+
+function setTitle() {
+	if (!config.siteName) {
+		return;
+	}
+
+	const title = document.querySelector("title");
+	title.innerText += " | " + config.siteName;
+}
 
 function setWatermark() {
 	if (!config.watermark) {
