@@ -36,6 +36,7 @@ let client;
     setLogo();
     setLoginCover();
     addCarouselImages();
+    setWatermark();
 
     loginForm.addEventListener("submit", handleLoginForm);
 
@@ -228,7 +229,7 @@ function loginError(noticeText, error = null) {
  * @param {string} [state] - The type of message state (error/success/info).
  */
 function setLoginNotice(text, state = "info") {
-    const notice = JSON.stringify({ text: text, state: state });
+    const notice = JSON.stringify({text: text, state: state});
     localStorage.setItem("loginNotice", notice);
 }
 
@@ -403,7 +404,7 @@ function setLoginColumnLocation() {
 }
 
 function addCarouselImages() {
-    if(!config.images.carousel || config.images.carousel.enabled === false) {
+    if (!config.images.carousel || config.images.carousel.enabled === false) {
         return;
     }
 
@@ -419,7 +420,7 @@ function addCarouselImages() {
 
     interval = 7500;
 
-    if(config.images.carousel.interval) {
+    if (config.images.carousel.interval) {
         interval = config.images.carousel.interval * 1000;
     }
 
@@ -451,7 +452,7 @@ function transitionImages() {
 
 // function to set the copyright information
 function setCopright() {
-    if(!copyright || !config.copyright.show) {
+    if (!copyright || !config.copyright.show) {
         // nothing to do if the copyright div can't be found
         // or if the config.copyright.show doesn't exist
         // or if config.copyright.show is false
@@ -459,6 +460,18 @@ function setCopright() {
     }
 
     // otherwise, set the text
-    copyright.innerText = config.copyright.holder + " " + config.copyright.year; 
+    copyright.innerText = config.copyright.holder + " " + config.copyright.year;
+}
+
+function setWatermark() {
+    if (!config.watermark) {
+        return;
+    }
+
+    const contentInner = document.querySelector(".login-form");
+    const watermark = document.createElement("div");
+    watermark.classList.add("watermark");
+    watermark.innerHTML = config.watermark;
+    contentInner.prepend(watermark);
 }
 

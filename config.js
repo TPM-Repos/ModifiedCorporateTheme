@@ -1,8 +1,8 @@
 // COPY THIS FILE TO 'configUser.js' AND UPDATE THE VALUES TO MATCH YOUR SERVER URL & GROUP ALIAS
-// Version 1.2.0
+// Version 1.2.1
 
 const config = {
-    version: "1.2.0",
+    version: "1.2.1",
     // the full path the site running the DriveWorks Live API
     // serverUrl: "https://dw21api.yourdomain.com",
     serverUrl: "",
@@ -59,8 +59,9 @@ const config = {
         show: true,
         holder: "TPM",
         year: "2024"
-    }
-    loginReturnUrls: true, // Toggle appending return urls to restore the previous location when redirected to the login form 
+    },
+    watermark: "Development Site",
+    loginReturnUrls: true, // Toggle appending return urls to restore the previous location when redirected to the login form
     locale: "en-US", // Set the default locale for displaying dates and numbers
     dateFormat: {
         month: 'long',
@@ -125,5 +126,4 @@ const config = {
             ],
         }
     },
-
 };
