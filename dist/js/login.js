@@ -33,10 +33,8 @@ let client;
     console.log("This site is running Modified Corporate Theme from TPM");
     console.log("You can learn more here: https://github.com/TPM-Repos/ModifiedCorporateTheme");
     console.log("Version: " + config.version);
-    setLogo();
     setLoginCover();
     addCarouselImages();
-    setWatermark();
 
     loginForm.addEventListener("submit", handleLoginForm);
 
@@ -351,17 +349,6 @@ function handleGenericError(error) {
 }
 
 /**
- * Set the logo
- */
-function setLogo() {
-    const logo = document.getElementById("logo");
-
-    if (logo && config.images.login) {
-        logo.src = config.images.login;
-    }
-}
-
-/**
  * Set the loginCover
  */
 function setLoginCover() {
@@ -462,16 +449,3 @@ function setCopright() {
     // otherwise, set the text
     copyright.innerText = config.copyright.holder + " " + config.copyright.year;
 }
-
-function setWatermark() {
-    if (!config.watermark) {
-        return;
-    }
-
-    const contentInner = document.querySelector(".login-form");
-    const watermark = document.createElement("div");
-    watermark.classList.add("watermark");
-    watermark.innerHTML = config.watermark;
-    contentInner.prepend(watermark);
-}
-
