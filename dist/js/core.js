@@ -16,12 +16,8 @@ let client;
  * Run on page load.
  */
 (() => {
-    console.log("This site is running Modified Corporate Theme from TPM");
-    console.log("You can learn more here: https://github.com/TPM-Repos/ModifiedCorporateTheme");
-    console.log("Version: " + config.version);
     // Check if Session Id exists
     checkStoredSessionId();
-    setLogo();
     showUsername();
     attachLogoutActions();
     detectTouchDevice();
@@ -304,7 +300,7 @@ function ensureDateTimeUTC(dateTime) {
         Z is the denotation for Zulu, meaning UTC+0, or Greenich mean time
         the end of the string will have a timezone in it with either a + or -
         For example
-            2024-03-08T00:19:33.517-05:00 or 2024-03-08T00:19:33.517+12:30 
+            2024-03-08T00:19:33.517-05:00 or 2024-03-08T00:19:33.517+12:30
         So we are going to identify the position of this, then replace it with Z
     */
     const regex = /[-+]\d{2}:\d{2}$/; // Match timezone offset pattern like "-05:00"
@@ -370,32 +366,3 @@ function hidePasswordReset() {
         passwordReset.style.display = "none";
     }
 }
-
-/**
- * Set the logo
- */
-function setLogo() {
-    const logo = document.getElementById("logo");
-
-    if (logo && config.images.sidebar) {
-        logo.src = config.images.sidebar;
-        return;
-    }
-}
-
-function setWatermark() {
-    if (!config.watermark) {
-        return;
-    }
-
-    const contentInner = document.querySelector(".content-inner");
-    const watermark = document.createElement("div");
-    watermark.classList.add("watermark");
-    // if the page is run.html, add a class to the watermark
-    if (window.location.pathname.includes("run.html")) {
-        watermark.classList.add("sideways");
-    }
-    watermark.innerHTML = config.watermark;
-    contentInner.prepend(watermark);
-}
-
