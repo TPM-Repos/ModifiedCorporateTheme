@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <title>Query processing... | DriveWorks</title>
+    <title>Query processing...</title>
     <link rel="icon" href="../favicon.ico" />
 
     <style>
@@ -47,6 +47,7 @@
             display: flex;
             flex-direction: column;
         }
+
         .error-message .message {
             display: inline-block;
             padding: .75em 1em;
@@ -55,12 +56,14 @@
             color: #fff;
             border-radius: .25em;
         }
+
         .error-message a {
             font-size: .875em;
             padding: 1em 0;
             color: #4299e1;
             text-decoration: underline;
         }
+
         .error-message a:hover {
             text-decoration: none;
         }
@@ -70,8 +73,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(359deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(359deg);
+            }
         }
     </style>
 </head>
@@ -97,7 +105,7 @@
 
     <!-- Option B) Inject Client Library dynamically from server url in config file -->
     <script>
-        (function(doc, script) {
+        (function (doc, script) {
             script = doc.createElement("script");
             script.src = config.serverUrl + "/DriveWorksLiveIntegrationClient.min.js";
             script.onload = () => dwClientLoaded(); // Custom local function run when client has loaded
@@ -106,4 +114,5 @@
     </script>
 
 </body>
+
 </html>
