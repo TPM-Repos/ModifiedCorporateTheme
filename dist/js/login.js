@@ -15,6 +15,7 @@ const loginDivider = document.getElementById("login-divider");
 const loginNotice = document.getElementById("login-notice");
 const forgotLink = document.getElementById("forgot-link");
 const createLink = document.getElementById("create-link");
+const copyright = document.getElementById("login-copyright");
 
 // Error Messages
 const genericErrorMessage = "There has been an issue.";
@@ -56,6 +57,7 @@ let client;
     }
     showLoginNotice();
     setLoginColumnLocation();
+    setCopright();
 })();
 
 /**
@@ -443,4 +445,16 @@ function transitionImages() {
     nextImage.classList.add("active");
 }
 
+// function to set the copyright information
+function setCopright() {
+    if(!copyright || !config.copyright.show) {
+        // nothing to do if the copyright div can't be found
+        // or if the config.copyright.show doesn't exist
+        // or if config.copyright.show is false
+        return;
+    }
+
+    // otherwise, set the text
+    copyright.innerText = config.copyright.holder + " " + config.copyright.year; 
+}
 
