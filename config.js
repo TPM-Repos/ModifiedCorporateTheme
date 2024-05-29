@@ -53,6 +53,11 @@ const config = {
         requireNewSession: true,
         requireExactAlias: false,
     },
+    copyright: {
+        show: true,
+        holder: "TPM",
+        year: "2024"
+    }
     loginReturnUrls: true, // Toggle appending return urls to restore the previous location when redirected to the login form 
     locale: "en-US", // Set the default locale for displaying dates and numbers
     dateFormat: {
