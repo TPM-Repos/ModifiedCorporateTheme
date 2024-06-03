@@ -2,9 +2,9 @@
 // Version 1.2.1
 
 const config = {
-    version: "1.2.1",
+    version: "1.2.2",
     // the full path the site running the DriveWorks Live API
-    // serverUrl: "https://dw21api.yourdomain.com",
+    // serverUrl: "https://dw21.api.yourdomain.com",
     serverUrl: "",
     // The default alias for the DriveWorks Group
     // This is a custom string that must match the name in the ConfigUser.xml file
