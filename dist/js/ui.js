@@ -1,4 +1,4 @@
-// Version 1.2.1
+// Version 1.2.2
 // The purpose of this file is UI tweaks that should be run on all pages.
 // core.js only runs on pages the user is logged in to.
 
@@ -30,10 +30,10 @@ function setWatermark() {
 
 	let contentInner;
 
-	if (window.location.pathname.includes("index.html")) {
-		contentInner = document.querySelector(".login-form");
-	} else {
+	if (window.location.pathname.includes(".html") && !window.location.pathname.includes("index.html")) {
 		contentInner = document.querySelector(".content-inner");
+	} else {
+		contentInner = document.querySelector(".login-form");
 	}
 
 	const watermark = document.createElement("div");
