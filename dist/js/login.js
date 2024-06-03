@@ -16,7 +16,7 @@ const loginDivider = document.getElementById("login-divider");
 const loginNotice = document.getElementById("login-notice");
 const forgotLink = document.getElementById("forgot-link");
 const createLink = document.getElementById("create-link");
-const copyright = document.getElementById("login-copyright");
+const copyright = document.querySelector(".login-copyright");
 
 // Error Messages
 const genericErrorMessage = "There has been an issue.";
@@ -444,5 +444,5 @@ function setCopright() {
     }
 
     // otherwise, set the text
-    copyright.innerText = config.copyright.holder + " " + config.copyright.year;
+    copyright.innerText = config.copyright.holder + " - " + config.copyright.year;
 }
