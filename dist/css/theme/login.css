@@ -4,302 +4,295 @@
 */
 
 :root {
-  --background-image: url("../../img/login-cover.png");
+	--background-image: url("../../img/login-cover.png");
 }
 
 /* Defaults */
 label {
-  display: block;
-  font-weight: 600;
+	display: block;
+	font-weight: 600;
 }
 
 input[type="text"],
 input[type="password"] {
-  display: block;
-  width: 100%;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-radius: var(--global-radius);
-  border: 2px solid #ddd;
-  box-shadow: none;
-  transition: border .2s ease;
-  background-color: #fff;
-  -webkit-appearance: none;
+	display: block;
+	width: 100%;
+	padding: 1em;
+	margin-bottom: 1em;
+	border-radius: var(--global-radius);
+	border: 2px solid #ddd;
+	box-shadow: none;
+	transition: border 0.2s ease;
+	background-color: #fff;
+	-webkit-appearance: none;
 }
 
 input:focus {
-  outline: none;
-  border-color: var(--color-neutral);
+	outline: none;
+	border-color: var(--color-neutral);
 }
 
 button {
-  padding: 1rem 1.25rem;
-  border-radius: 100em;
-  border: none;
-  background-color: var(--color-neutral);
-  color: #fff;
-  text-align: center;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background-color .3s ease,
-    filter .3s ease;
+	padding: 1rem 1.25rem;
+	border-radius: 100em;
+	border: none;
+	background-color: var(--color-neutral);
+	color: #fff;
+	text-align: center;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.3s ease, filter 0.3s ease;
 }
 
 button:hover {
-  filter: brightness(110%);
+	filter: brightness(110%);
 }
 
 button:disabled {
-  opacity: .25;
-  pointer-events: none;
+	opacity: 0.25;
+	pointer-events: none;
 }
 
 /* Form */
 .login-container {
-  display: flex;
-  min-height: 100vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-image: var(--background-image);
+	display: flex;
+	min-height: 100vh;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-image: var(--background-image);
 }
 
 .login-form {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  width: 100%;
-  padding: 2.5em 2em 1.5em;
-  text-align: center;
-  background-color: #fff;
-  box-shadow: var(--shadow-light);
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	width: 100%;
+	padding: 2.5em 2em 1.5em;
+	text-align: center;
+	background-color: #fff;
+	box-shadow: var(--shadow-light);
 }
 
 .login-details {
-  text-align: left;
-  width: 100%;
-  max-width: 25em;
-  margin: 1em auto 2em;
+	text-align: left;
+	width: 100%;
+	max-width: 25em;
+	margin: 1em auto 2em;
 }
 
 .login-cover {
-  background-image: var(--background-image);
-  background-size: cover;
-  background-position: center;
-  background-color: #eee;
+	background-image: var(--background-image);
+	background-size: cover;
+	background-position: center;
+	background-color: #eee;
 }
 
 .login-notice {
-  display: none;
-  padding: .5em .75em;
-  margin: 0 auto;
-  background-color: var(--color-neutral);
-  color: #fff;
-  border-radius: var(--global-radius);
+	display: none;
+	padding: 0.5em 0.75em;
+	margin: 0 auto;
+	background-color: var(--color-neutral);
+	color: #fff;
+	border-radius: var(--global-radius);
 }
 
 .login-notice.is-shown {
-  display: inline-block;
+	display: inline-block;
 }
 
 .login-notice.error {
-  background-color: var(--color-error);
+	background-color: var(--color-error);
 }
 
 .login-notice.success {
-  background-color: var(--color-success);
+	background-color: var(--color-success);
 }
 
 .login-logo {
-  margin-bottom: 2em;
+	margin-bottom: 2em;
 }
 
 .login-logo img {
-  width: 100%;
-  height: auto;
-  max-width: 200px;
+	width: 100%;
+	height: auto;
+	max-width: 200px;
 }
 
 .login-title {
-  font-size: 1.75em;
-  font-weight: 800;
-  margin-bottom: .5em;
+	font-size: 1.75em;
+	font-weight: 800;
+	margin-bottom: 0.5em;
 }
 
 .login-information {
-  opacity: .9;
-  font-size: 1.2em;
-  margin: 0 0 1rem;
+	opacity: 0.9;
+	font-size: 1.2em;
+	margin: 0 0 1rem;
 }
 
 .login-form label {
-  margin-bottom: .25em;
+	margin-bottom: 0.25em;
 }
 
 .login-form input {
-  font-size: 1.2em;
-  padding: .75em;
+	font-size: 1.2em;
+	padding: 0.75em;
 }
 
 .password-input {
-  position: relative;
-  margin-bottom: 1em;
+	position: relative;
+	margin-bottom: 1em;
 }
 
 .password-input input {
-  position: relative;
-  padding-right: 5.5em;
-  margin: 0;
+	position: relative;
+	padding-right: 5.5em;
+	margin: 0;
 }
 
 .password-toggle {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 6.5em;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: none;
-  color: var(--color-neutral);
-  font-weight: 600;
-  padding: .5em 1em;
-  border-radius: .5em;
-  transition: color .2s ease;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 6.5em;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: none;
+	color: var(--color-neutral);
+	font-weight: 600;
+	padding: 0.5em 1em;
+	border-radius: 0.5em;
+	transition: color 0.2s ease;
 }
 
 .password-toggle:hover {
-  color: #333;
+	color: #333;
 }
 
 .password-toggle svg {
-  font-size: 1.25em;
-  margin-right: .25em;
+	font-size: 1.25em;
+	margin-right: 0.25em;
 }
 
 .login-button {
-  position: relative;
-  width: 100%;
-  font-size: 1.125rem;
+	position: relative;
+	width: 100%;
+	font-size: 1.125rem;
 }
 
 .login-button:focus {
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .5);
+	box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
 }
 
 .login-button svg {
-  display: none;
-  font-size: 1.5em;
-  width: 1em;
-  height: 1em;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -0.5em 0 0 -0.5em;
-  color: #fff;
-  animation: spin .75s linear infinite;
+	display: none;
+	font-size: 1.5em;
+	width: 1em;
+	height: 1em;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -0.5em 0 0 -0.5em;
+	color: #fff;
+	animation: spin 0.75s linear infinite;
 }
 
 .login-button.is-loading {
-  opacity: 0.5;
-  pointer-events: none;
-  color: transparent;
+	opacity: 0.5;
+	pointer-events: none;
+	color: transparent;
 }
 
 .login-button.is-loading svg {
-  display: block;
+	display: block;
 }
 
 .login-divider {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin: 1.25rem 0;
-  font-size: .875rem;
-  color: rgba(0, 0, 0, .5);
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin: 1.25rem 0;
+	font-size: 0.875rem;
+	color: rgba(0, 0, 0, 0.5);
 }
 
 .login-divider:before,
 .login-divider:after {
-  content: '';
-  flex: 1;
-  border: 1px solid rgba(0, 0, 0, .05);
+	content: "";
+	flex: 1;
+	border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .login-copyright {
-  margin-top: auto;
-  font-size: .9em;
-  color: #888;
+	margin-top: auto;
+	font-size: 0.9em;
+	color: #888;
 }
 
 /* Screen: Medium screens */
 @media screen and (min-width: 40em) {
-
-  .login-form {
-    padding-top: 5em;
-  }
-
+	.login-form {
+		padding-top: 5em;
+	}
 }
 
 /* Screen: Large screens */
 @media screen and (min-width: 60em) {
+	.login-form {
+		width: 35%;
+		min-width: 30em;
+		padding: 4em 4em 2em;
+	}
 
-  .login-form {
-    width: 35%;
-    min-width: 30em;
-    padding: 4em 4em 2em;
-  }
+	.login-cover {
+		width: 65%;
+	}
 
-  .login-cover {
-    width: 65%;
-  }
+	.login-logo {
+		margin-bottom: 3em;
+	}
 
-  .login-logo {
-    margin-bottom: 3em;
-  }
+	.login-title {
+		font-size: 2em;
+	}
 
-  .login-title {
-    font-size: 2em;
-  }
-
-  .login-notice {
-    margin: .5em auto;
-  }
-
+	.login-notice {
+		margin: 0.5em auto;
+	}
 }
 
 #forgot-link {
-  top: -.5em;
-  position: relative;
+	top: -0.5em;
+	position: relative;
 }
 
 #create-link {
-  position: relative;
-  top: .5em;
+	position: relative;
+	top: 0.5em;
 }
 
-
 .login-cover {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
+	position: relative;
+	width: 100%;
+	overflow: hidden;
 }
 
 .login-cover img {
-  position: absolute;
-  object-fit: cover;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 2.5s ease-in-out;
+	position: absolute;
+	object-fit: cover;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: opacity 2.5s ease-in-out;
 }
 
 .login-cover img.active {
-  opacity: 1;
+	opacity: 1;
 }

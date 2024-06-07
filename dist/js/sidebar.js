@@ -7,8 +7,8 @@
  * @returns {HTMLElement} li The list item element
  */
 function sideBarListItem(title, icon, link) {
-    // Example: Projects, projects, projects.html
-    /* <li>
+	// Example: Projects, projects, projects.html
+	/* <li>
         <a href="projects.html">
             <svg class="icon">
                 <use xlink:href="dist/icons.svg#projects" />
@@ -16,19 +16,19 @@ function sideBarListItem(title, icon, link) {
             Projects
         </a>
     </li> */
-    
-    var li = document.createElement("li");
-    var innerCode = `
+
+	var li = document.createElement("li")
+	var innerCode = `
         <a href="${link}">
             <svg class="icon">
                 <use xlink:href="dist/icons.svg#${icon}" />
             </svg>
             ${title}
         </a>
-    `;
-    li.innerHTML = innerCode;
+    `
+	li.innerHTML = innerCode
 
-    return li;
+	return li
 }
 
 /**
@@ -36,33 +36,32 @@ function sideBarListItem(title, icon, link) {
  * @returns {HTMLUListElement} ul The unordered list element
  */
 function sideBarList() {
-    var ul = document.createElement("ul");
-    ul.classList.add("sidebar-list");
+	var ul = document.createElement("ul")
+	ul.classList.add("sidebar-list")
 
-    for (var i = 0; i < config.sidebarLinks.length; i++) {
-        var title = config.sidebarLinks[i].title;
-        var icon = config.sidebarLinks[i].icon;
-        var link = config.sidebarLinks[i].href;
-        var li = sideBarListItem(title, icon, link);
-        ul.appendChild(li);
-    }
+	for (var i = 0; i < config.sidebarLinks.length; i++) {
+		var title = config.sidebarLinks[i].title
+		var icon = config.sidebarLinks[i].icon
+		var link = config.sidebarLinks[i].href
+		var li = sideBarListItem(title, icon, link)
+		ul.appendChild(li)
+	}
 
-    // Get the current page's filename and if it matches the link, add the active class
-    var currentPage = window.location.pathname.split("/").pop();
-    var links = ul.querySelectorAll("a");
-    for (var i = 0; i < links.length; i++) {
-        var link = links[i];
-        var href = link.getAttribute("href");
-        var linkPage = href.split("/").pop();
-        if (linkPage === currentPage) {
-            link.classList.add("is-current");
-        }
-    }
+	// Get the current page's filename and if it matches the link, add the active class
+	var currentPage = window.location.pathname.split("/").pop()
+	var links = ul.querySelectorAll("a")
+	for (var i = 0; i < links.length; i++) {
+		var link = links[i]
+		var href = link.getAttribute("href")
+		var linkPage = href.split("/").pop()
+		if (linkPage === currentPage) {
+			link.classList.add("is-current")
+		}
+	}
 
-    return ul;
+	return ul
 }
 
-const sidebar = document.querySelector("#nav-list ul");
-const logoutList = sidebar.innerHTML;
-sidebar.innerHTML = sideBarList().outerHTML + logoutList;
-
+const sidebar = document.querySelector("#nav-list ul")
+const logoutList = sidebar.innerHTML
+sidebar.innerHTML = sideBarList().outerHTML + logoutList

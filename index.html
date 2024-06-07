@@ -1,117 +1,142 @@
 <!-- Version 1.2.0 -->
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
-<head>
+		<title>Login</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<!-- Core Styles -->
+		<link rel="stylesheet" type="text/css" href="dist/css/core.css" />
 
-    <title>Login</title>
+		<!-- Theme Styles (customizable) -->
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/theme.css"
+		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/login.css"
+		/>
 
-    <!-- Core Styles -->
-    <link rel="stylesheet" type="text/css" href="dist/css/core.css" />
+		<!-- Favicon -->
+		<link rel="icon" href="favicon.ico" />
 
-    <!-- Theme Styles (customizable) -->
-    <link rel="stylesheet" type="text/css" href="dist/css/theme/theme.css" />
-    <link rel="stylesheet" type="text/css" href="dist/css/theme/login.css" />
+		<!-- Custom Font -->
+		<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
 
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" />
+	<body class="template-login">
+		<div class="login-container">
+			<form id="login-form" class="login-form" onsubmit="return false;">
+				<div class="login-logo">
+					<img id="logo" />
+				</div>
 
-    <!-- Custom Font -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+				<h1 class="login-title">Login to configure</h1>
+				<p class="login-information">
+					Access Projects, Specifications & Documents.
+				</p>
 
-</head>
+				<div id="login-notice" class="login-notice"></div>
 
-<body class="template-login">
+				<div class="login-details">
+					<label for="login-username"> Username </label>
+					<input
+						type="text"
+						id="login-username"
+						autocomplete="username"
+						value=""
+						autofocus
+					/>
 
-    <div class="login-container">
+					<label for="login-password"> Password </label>
+					<div class="password-input">
+						<input
+							type="password"
+							id="login-password"
+							autocomplete="current-password"
+							value=""
+						/>
 
-        <form id="login-form" class="login-form" onsubmit="return false;">
+						<button
+							type="button"
+							id="password-toggle"
+							class="password-toggle"
+						>
+							<svg class="icon">
+								<use xlink:href="dist/icons.svg#eye-open" />
+							</svg>
+							Show
+						</button>
+					</div>
 
-            <div class="login-logo">
-                <img id="logo" />
-            </div>
+					<a
+						id="forgot-link"
+						href="query?DWConstantForm=ForgotPassword"
+					>
+						Forgot Password?
+					</a>
 
-            <h1 class="login-title">Login to configure</h1>
-            <p class="login-information">Access Projects, Specifications & Documents.</p>
+					<button
+						type="submit"
+						id="login-button"
+						class="login-button"
+					>
+						Login
+						<svg class="icon">
+							<use xlink:href="dist/icons.svg#loading" />
+						</svg>
+					</button>
 
-            <div id="login-notice" class="login-notice"></div>
+					<a
+						id="create-link"
+						href="query?DWConstantForm=CreateAccount"
+					>
+						Create Account
+					</a>
 
-            <div class="login-details">
+					<div id="login-divider">or</div>
 
-                <label for="login-username">
-                    Username
-                </label>
-                <input type="text" id="login-username" autocomplete="username" value="" autofocus />
+					<button
+						type="button"
+						id="login-sso-button"
+						class="login-button"
+					>
+						Login with SSO
+					</button>
+				</div>
 
-                <label for="login-password">
-                    Password
-                </label>
-                <div class="password-input">
+				<div class="login-copyright">TPM - 2024</div>
+			</form>
 
-                    <input type="password" id="login-password" autocomplete="current-password" value="" />
+			<div class="login-cover"></div>
+		</div>
 
-                    <button type="button" id="password-toggle" class="password-toggle">
-                        <svg class="icon">
-                            <use xlink:href="dist/icons.svg#eye-open" />
-                        </svg>
-                        Show
-                    </button>
+		<!-- Scripts -->
+		<script src="configUser.js"></script>
+		<script src="dist/js/login.js"></script>
+		<script src="dist/js/ui.js"></script>
 
-                </div>
+		<!-- Option A) Directly load Client Library -->
+		<!-- <script src="https://YOUR-DRIVEWORKS-LIVE-SERVER-URL.COM/DriveworksLiveIntegrationClient.min.js" onload="dwClientLoaded()"></script> -->
 
-                <a id="forgot-link" href="query?DWConstantForm=ForgotPassword">
-                    Forgot Password?
-                </a>
-
-                <button type="submit" id="login-button" class="login-button">
-                    Login
-                    <svg class="icon">
-                        <use xlink:href="dist/icons.svg#loading" />
-                    </svg>
-                </button>
-
-                <a id="create-link" href="query?DWConstantForm=CreateAccount">
-                    Create Account
-                </a>
-
-                <div id="login-divider">or</div>
-
-                <button type="button" id="login-sso-button" class="login-button">
-                    Login with SSO
-                </button>
-
-            </div>
-
-            <div class="login-copyright">TPM - 2024</div>
-
-        </form>
-
-        <div class="login-cover"></div>
-
-    </div>
-
-    <!-- Scripts -->
-    <script src="configUser.js"></script>
-    <script src="dist/js/login.js"></script>
-    <script src="dist/js/ui.js"></script>
-
-    <!-- Option A) Directly load Client Library -->
-    <!-- <script src="https://YOUR-DRIVEWORKS-LIVE-SERVER-URL.COM/DriveworksLiveIntegrationClient.min.js" onload="dwClientLoaded()"></script> -->
-
-    <!-- Option B) Inject Client Library dynamically from server url in config file -->
-    <script>
-        (function (doc, script) {
-            script = doc.createElement("script");
-            script.src = config.serverUrl + "/DriveWorksLiveIntegrationClient.min.js";
-            script.onload = () => dwClientLoaded(); // Custom local function run when client has loaded
-            doc.body.appendChild(script);
-        }(document));
-    </script>
-
-</body>
-
+		<!-- Option B) Inject Client Library dynamically from server url in config file -->
+		<script>
+			;(function (doc, script) {
+				script = doc.createElement("script")
+				script.src =
+					config.serverUrl + "/DriveWorksLiveIntegrationClient.min.js"
+				script.onload = () => dwClientLoaded() // Custom local function run when client has loaded
+				doc.body.appendChild(script)
+			})(document)
+		</script>
+	</body>
 </html>

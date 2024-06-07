@@ -4,176 +4,171 @@
 */
 
 .drive-app-inner {
-  padding: .5em .5em 3em;
-  margin: 0 auto;
-  max-width: var(--row-width);
-  min-height: 101vh; /* Stop scrollbar pop on load */
+	padding: 0.5em 0.5em 3em;
+	margin: 0 auto;
+	max-width: var(--row-width);
+	min-height: 101vh; /* Stop scrollbar pop on load */
 }
 
 .section-title h1 {
-  margin: .5em .25em 1em;
+	margin: 0.5em 0.25em 1em;
 }
 
 .drive-app-list {
-  display: flex;
-  flex-wrap: wrap;
-  transition: opacity .3s ease;
+	display: flex;
+	flex-wrap: wrap;
+	transition: opacity 0.3s ease;
 }
 
 .empty-drive-apps {
-  padding: 0 .5em;
+	padding: 0 0.5em;
 }
 .empty-drive-apps p {
-  font-size: 1.5em;
-  margin: 0;
+	font-size: 1.5em;
+	margin: 0;
 }
 
 .drive-app-item {
-  width: 100%;
-  padding: 0 .75em 1.5em;
-  text-decoration: none;
-  opacity: 0;
-  animation: fade-up .5s ease forwards;
-  animation-delay: calc(var(--index) * 20ms);
+	width: 100%;
+	padding: 0 0.75em 1.5em;
+	text-decoration: none;
+	opacity: 0;
+	animation: fade-up 0.5s ease forwards;
+	animation-delay: calc(var(--index) * 20ms);
 }
 .drive-app-item:focus {
-  outline: none;
+	outline: none;
 }
 .drive-app-item:focus .inner {
-  box-shadow: 0 0 0 2px var(--color-focus);
+	box-shadow: 0 0 0 2px var(--color-focus);
 }
 
 .drive-app-item .inner {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  background-color: #fff;
-  padding: 1.5em;
-  border: 2px solid transparent;
-  border-radius: var(--global-radius);
-  box-shadow: var(--shadow-light);
-  transition: border .3s ease;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	height: 100%;
+	background-color: #fff;
+	padding: 1.5em;
+	border: 2px solid transparent;
+	border-radius: var(--global-radius);
+	box-shadow: var(--shadow-light);
+	transition: border 0.3s ease;
 }
 .drive-app-item .inner:hover {
-  border: 2px solid var(--color-focus);
+	border: 2px solid var(--color-focus);
 }
 
 .drive-app-item .icon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 1.5rem;
-  font-size: 1.5em;
-  color: rgba(0,0,0,.15);
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 1.5rem;
+	font-size: 1.5em;
+	color: rgba(0, 0, 0, 0.15);
 }
 
 .drive-app-item .details {
-  width: 100%;
-  margin-bottom: 1em;
-  overflow: hidden;
+	width: 100%;
+	margin-bottom: 1em;
+	overflow: hidden;
 }
 
 .drive-app-item .drive-app-alias,
 .drive-app-item .drive-app-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .drive-app-item .drive-app-alias {
-  font-size: 1.25em;
-  padding-right: 2em;
-  margin: 0 0 .15em;
+	font-size: 1.25em;
+	padding-right: 2em;
+	margin: 0 0 0.15em;
 }
 .drive-app-item .drive-app-name {
-  font-size: 1em;
-  font-weight: 400;
-  color: var(--accent-dark);
-  opacity: .6;
+	font-size: 1em;
+	font-weight: 400;
+	color: var(--accent-dark);
+	opacity: 0.6;
 }
 
 .drive-app-item .drive-app-action {
-  display: inline-flex;
-  justify-content: center;
-  padding: 0.75em 2em;
-  margin: 0;
-  border-radius: 100em;
-  border: none;
-  background-color: var(--color-neutral);
-  color: #fff;
-  cursor: pointer;
-  font-size: 1em;
-  font-weight: 600;
-  transition:
-    background-color .3s ease,
-    filter .3s ease;
+	display: inline-flex;
+	justify-content: center;
+	padding: 0.75em 2em;
+	margin: 0;
+	border-radius: 100em;
+	border: none;
+	background-color: var(--color-neutral);
+	color: #fff;
+	cursor: pointer;
+	font-size: 1em;
+	font-weight: 600;
+	transition: background-color 0.3s ease, filter 0.3s ease;
 }
 .drive-app-item .drive-app-action:hover {
-  filter: brightness(110%);
+	filter: brightness(110%);
 }
 
 /* Screen: Tablet-up */
 @media screen and (min-width: 40em) {
+	.drive-app-inner {
+		padding: 1.5em 1.5em 5em;
+	}
 
-  .drive-app-inner {
-    padding: 1.5em 1.5em 5em;
-  }
+	.drive-app-item .inner {
+		flex-wrap: nowrap;
+		padding: 1.5em;
+	}
 
-  .drive-app-item .inner {
-    flex-wrap: nowrap;
-    padding: 1.5em;
-  }
+	.drive-app-item .icon {
+		position: static;
+		margin: 0 1rem 0 0;
+		font-size: 2.5em;
+	}
 
-  .drive-app-item .icon {
-    position: static;
-    margin: 0 1rem 0 0;
-    font-size: 2.5em;
-  }
-
-  .drive-app-item .details {
-    margin: 0 1.5em 0 0;
-  }
+	.drive-app-item .details {
+		margin: 0 1.5em 0 0;
+	}
 }
 
 /* Screen: Laptop-up */
 @media screen and (min-width: 60em) {
+	.section-title h1 {
+		margin: 0.75em 0.25em 1.25em;
+	}
 
-  .section-title h1 {
-    margin: .75em .25em 1.25em;
-  }
-
-  .drive-app-inner {
-    padding: 1.5em 2em 5em;
-  }
+	.drive-app-inner {
+		padding: 1.5em 2em 5em;
+	}
 }
 
 /* Screen: Desktop-up */
 @media screen and (min-width: 100em) {
-
-  .drive-app-item {
-    width: 50%;
-  }
+	.drive-app-item {
+		width: 50%;
+	}
 }
 
 /* Loading skeleton */
 .skeleton-block {
-  height: 6em;
-  margin-bottom: .5em;
+	height: 6em;
+	margin-bottom: 0.5em;
 }
 
 .drive-app-item.skeleton-item {
-  opacity: 1;
-  animation: none;
+	opacity: 1;
+	animation: none;
 }
 
 .drive-app-list .skeleton-item:nth-child(2) {
-  opacity: .75;
+	opacity: 0.75;
 }
 .drive-app-list .skeleton-item:nth-child(3) {
-  opacity: .5;
+	opacity: 0.5;
 }
 .drive-app-list .skeleton-item:nth-child(4) {
-  opacity: .25;
+	opacity: 0.25;
 }

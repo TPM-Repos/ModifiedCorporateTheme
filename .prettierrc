@@ -1,0 +1,12 @@
+{
+	"tabWidth": 4,
+	"useTabs": true,
+	"printWidth": 80,
+	"semi": false,
+	"trailingComma": "all",
+	"bracketSpacing": false,
+	"bracketSameLine": false,
+	"arrowParens": "always",
+	"endOfLine": "lf",
+	"embeddedLanguageFormatting": "auto"
+}

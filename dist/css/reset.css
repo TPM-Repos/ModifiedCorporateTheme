@@ -11,7 +11,7 @@
 .dw-css-reset *,
 .dw-css-reset *::before,
 .dw-css-reset *::after {
-  box-sizing: content-box;
+	box-sizing: content-box;
 }
 
 .dw-css-reset div,
@@ -38,18 +38,18 @@
 .dw-css-reset blockquote,
 .dw-css-reset th,
 .dw-css-reset td {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .dw-css-reset table {
-  border-collapse: collapse;
-  border-spacing: 0;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 .dw-css-reset fieldset,
 .dw-css-reset img {
-  border: 0;
+	border: 0;
 }
 
 .dw-css-reset address,
@@ -61,18 +61,18 @@
 .dw-css-reset strong,
 .dw-css-reset th,
 .dw-css-reset var {
-  font-style: normal;
-  font-weight: normal;
+	font-style: normal;
+	font-weight: normal;
 }
 
 .dw-css-reset ol,
 .dw-css-reset ul {
-  list-style: none;
+	list-style: none;
 }
 
 .dw-css-reset caption,
 .dw-css-reset th {
-  text-align: left;
+	text-align: left;
 }
 .dw-css-reset h1,
 .dw-css-reset h2,
@@ -80,18 +80,18 @@
 .dw-css-reset h4,
 .dw-css-reset h5,
 .dw-css-reset h6 {
-  font-size: 100%;
-  font-weight: normal;
+	font-size: 100%;
+	font-weight: normal;
 }
 
 .dw-css-reset input,
 .dw-css-reset textarea,
 .dw-css-reset select {
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
 }
 
 .dw-css-reset legend {
-  color: #000;
+	color: #000;
 }

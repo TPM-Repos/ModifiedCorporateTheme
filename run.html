@@ -1,135 +1,170 @@
 <!-- Version 1.2.0 -->
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
-<head>
+		<title>Run</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<!-- Core Styles -->
+		<link rel="stylesheet" type="text/css" href="dist/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="dist/css/core.css" />
 
-    <title>Run</title>
+		<!-- Theme Styles (customizable) -->
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/theme.css"
+		/>
+		<link rel="stylesheet" type="text/css" href="dist/css/theme/run.css" />
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/fonts.css"
+		/>
 
-    <!-- Core Styles -->
-    <link rel="stylesheet" type="text/css" href="dist/css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="dist/css/core.css" />
+		<!-- Favicon -->
+		<link rel="icon" href="favicon.ico" />
 
-    <!-- Theme Styles (customizable) -->
-    <link rel="stylesheet" type="text/css" href="dist/css/theme/theme.css" />
-    <link rel="stylesheet" type="text/css" href="dist/css/theme/run.css" />
-    <link rel="stylesheet" type="text/css" href="dist/css/theme/fonts.css" />
+		<!-- Custom Font -->
+		<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
 
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" />
+	<body class="template-run">
+		<main class="content-wrap">
+			<aside
+				id="content-navigation"
+				class="content-nav"
+				style="display: none"
+			>
+				<div class="logo-wrap">
+					<a href="projects.html" class="logo">
+						<img id="logo" />
+					</a>
 
-    <!-- Custom Font -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+					<button id="nav-toggle" class="nav-toggle" title="Menu">
+						<svg class="icon">
+							<use xlink:href="dist/icons.svg#menu" />
+							<title>Menu</title>
+						</svg>
+					</button>
+				</div>
 
-</head>
+				<nav id="nav-list" class="action-list">
+					<ul>
+						<li>
+							<button id="specification-cancel-button">
+								Cancel
+							</button>
+						</li>
 
-<body class="template-run">
+						<li id="form-actions" class="form-actions action-group">
+							<button
+								id="form-previous-button"
+								class="action-form"
+							>
+								Previous
+							</button>
+							<button id="form-next-button" class="action-form">
+								Next
+							</button>
+							<button id="dialog-ok-button" class="action-dialog">
+								OK
+							</button>
+							<button
+								id="dialog-cancel-button"
+								class="action-dialog"
+							>
+								Close
+							</button>
+						</li>
 
-    <main class="content-wrap">
+						<li
+							id="specification-actions"
+							class="specification-actions action-group"
+						></li>
 
-        <aside id="content-navigation" class="content-nav" style="display: none;">
+						<li class="logout-list">
+							<button
+								type="button"
+								id="logout-nav"
+								class="logout-button"
+							>
+								Log out
+							</button>
+						</li>
+					</ul>
+				</nav>
 
-            <div class="logo-wrap">
+				<div class="user-actions">
+					<div id="active-username" class="active-username">
+						<svg class="icon">
+							<use xlink:href="dist/icons.svg#user" />
+						</svg>
+						<span class="username"></span>
+					</div>
 
-                <a href="projects.html" class="logo">
-                    <img id="logo" />
-                </a>
+					<button
+						type="button"
+						id="logout-button"
+						class="logout-button"
+					>
+						Log out
+					</button>
+				</div>
+			</aside>
 
-                <button id="nav-toggle" class="nav-toggle" title="Menu">
-                    <svg class="icon">
-                        <use xlink:href="dist/icons.svg#menu" />
-                        <title>Menu</title>
-                    </svg>
-                </button>
+			<section id="content-inner" class="content-inner">
+				<!-- Form Container -->
+				<div
+					id="form-container"
+					class="form-container dw-css-reset"
+				></div>
 
-            </div>
+				<!-- Loading Overlay -->
+				<div id="form-loading" class="form-loading">
+					<div class="loading-state">
+						<div class="loader spin"></div>
+						Loading...
+					</div>
+				</div>
+			</section>
 
-            <nav id="nav-list" class="action-list">
-                <ul>
+			<button
+				type="button"
+				id="nav-close"
+				class="nav-overlay"
+				title="Close Menu"
+			>
+				Close Menu
+			</button>
+		</main>
 
-                    <li><button id="specification-cancel-button">Cancel</button></li>
+		<!-- Scripts -->
+		<script src="configUser.js"></script>
+		<script src="dist/js/sidebar.js"></script>
+		<script src="dist/js/run.js"></script>
+		<script src="dist/js/ui.js"></script>
+		<script src="dist/js/core.js"></script>
 
-                    <li id="form-actions" class="form-actions action-group">
-                        <button id="form-previous-button" class="action-form">Previous</button>
-                        <button id="form-next-button" class="action-form">Next</button>
-                        <button id="dialog-ok-button" class="action-dialog">OK</button>
-                        <button id="dialog-cancel-button" class="action-dialog">Close</button>
-                    </li>
+		<!-- Option A) Directly load Client Library -->
+		<!-- <script src="https://YOUR-DRIVEWORKS-LIVE-SERVER-URL.COM/DriveworksLiveIntegrationClient.min.js" onload="dwClientLoaded()" onerror="dwClientLoadError()"></script> -->
 
-                    <li id="specification-actions" class="specification-actions action-group"></li>
-
-                    <li class="logout-list">
-                        <button type="button" id="logout-nav" class="logout-button">
-                            Log out
-                        </button>
-                    </li>
-
-                </ul>
-            </nav>
-
-            <div class="user-actions">
-
-                <div id="active-username" class="active-username">
-                    <svg class="icon">
-                        <use xlink:href="dist/icons.svg#user" />
-                    </svg>
-                    <span class="username"></span>
-                </div>
-
-                <button type="button" id="logout-button" class="logout-button">
-                    Log out
-                </button>
-
-            </div>
-
-        </aside>
-
-        <section id="content-inner" class="content-inner">
-
-            <!-- Form Container -->
-            <div id="form-container" class="form-container dw-css-reset"></div>
-
-            <!-- Loading Overlay -->
-            <div id="form-loading" class="form-loading">
-                <div class="loading-state">
-                    <div class="loader spin"></div>
-                    Loading...
-                </div>
-            </div>
-
-        </section>
-
-        <button type="button" id="nav-close" class="nav-overlay" title="Close Menu">
-            Close Menu
-        </button>
-
-    </main>
-
-    <!-- Scripts -->
-    <script src="configUser.js"></script>
-    <script src="dist/js/sidebar.js"></script>
-    <script src="dist/js/run.js"></script>
-    <script src="dist/js/ui.js"></script>
-    <script src="dist/js/core.js"></script>
-
-    <!-- Option A) Directly load Client Library -->
-    <!-- <script src="https://YOUR-DRIVEWORKS-LIVE-SERVER-URL.COM/DriveworksLiveIntegrationClient.min.js" onload="dwClientLoaded()" onerror="dwClientLoadError()"></script> -->
-
-    <!-- Option B) Inject Client Library dynamically from server url in config file -->
-    <script>
-        (function (doc, script) {
-            script = doc.createElement("script");
-            script.src = config.serverUrl + "/DriveWorksLiveIntegrationClient.min.js";
-            script.onerror = () => dwClientLoadError();
-            script.onload = () => dwClientLoaded(); // Custom local function run when client has loaded
-            doc.body.appendChild(script);
-        }(document));
-    </script>
-
-</body>
-
+		<!-- Option B) Inject Client Library dynamically from server url in config file -->
+		<script>
+			;(function (doc, script) {
+				script = doc.createElement("script")
+				script.src =
+					config.serverUrl + "/DriveWorksLiveIntegrationClient.min.js"
+				script.onerror = () => dwClientLoadError()
+				script.onload = () => dwClientLoaded() // Custom local function run when client has loaded
+				doc.body.appendChild(script)
+			})(document)
+		</script>
+	</body>
 </html>

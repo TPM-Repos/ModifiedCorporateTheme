@@ -1,132 +1,143 @@
 <!-- Version 1.2.0 -->
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
-<head>
+		<title>Projects</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<!-- Core Styles -->
+		<link rel="stylesheet" type="text/css" href="dist/css/core.css" />
 
-    <title>Projects</title>
+		<!-- Theme Styles (customizable) -->
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/theme.css"
+		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/projects.css"
+		/>
 
-    <!-- Core Styles -->
-    <link rel="stylesheet" type="text/css" href="dist/css/core.css" />
+		<!-- Favicon -->
+		<link rel="icon" href="favicon.ico" />
 
-    <!-- Theme Styles (customizable) -->
-    <link rel="stylesheet" type="text/css" href="dist/css/theme/theme.css" />
-    <link rel="stylesheet" type="text/css" href="dist/css/theme/projects.css" />
+		<!-- Custom Font -->
+		<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
 
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" />
+	<body class="template-projects has-navigation">
+		<main class="content-wrap">
+			<aside class="content-nav">
+				<div class="logo-wrap">
+					<a href="projects.html" class="logo">
+						<img id="logo" />
+					</a>
 
-    <!-- Custom Font -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+					<button id="nav-toggle" class="nav-toggle" title="Menu">
+						<svg class="icon">
+							<use xlink:href="dist/icons.svg#menu" />
+							<title>Menu</title>
+						</svg>
+					</button>
+				</div>
 
-</head>
+				<nav id="nav-list">
+					<ul>
+						<li class="logout-list">
+							<button
+								type="button"
+								id="logout-nav"
+								class="logout-button"
+							>
+								Log out
+							</button>
+						</li>
+					</ul>
+				</nav>
 
-<body class="template-projects has-navigation">
+				<div class="user-actions">
+					<div id="active-username" class="active-username">
+						<svg class="icon">
+							<use xlink:href="dist/icons.svg#user" />
+						</svg>
+						<span class="username"></span>
+					</div>
 
-    <main class="content-wrap">
+					<button
+						type="button"
+						id="logout-button"
+						class="logout-button"
+					>
+						Log out
+					</button>
+				</div>
+			</aside>
 
-        <aside class="content-nav">
+			<section class="content-inner">
+				<div class="project-inner">
+					<div class="section-title">
+						<h1>Projects</h1>
+					</div>
 
-            <div class="logo-wrap">
+					<div
+						id="project-list"
+						class="project-list"
+						style="opacity: 0"
+					>
+						<div class="project-item skeleton-item">
+							<div class="skeleton-block"></div>
+						</div>
+						<div class="project-item skeleton-item">
+							<div class="skeleton-block"></div>
+						</div>
+						<div class="project-item skeleton-item">
+							<div class="skeleton-block"></div>
+						</div>
+						<div class="project-item skeleton-item">
+							<div class="skeleton-block"></div>
+						</div>
+					</div>
+				</div>
+			</section>
 
-                <a href="projects.html" class="logo">
-                    <img id="logo" />
-                </a>
+			<button
+				type="button"
+				id="nav-close"
+				class="nav-overlay"
+				title="Close Menu"
+			>
+				Close Menu
+			</button>
+		</main>
 
-                <button id="nav-toggle" class="nav-toggle" title="Menu">
-                    <svg class="icon">
-                        <use xlink:href="dist/icons.svg#menu" />
-                        <title>Menu</title>
-                    </svg>
-                </button>
+		<!-- Scripts -->
+		<script src="configUser.js"></script>
+		<script src="dist/js/sidebar.js"></script>
+		<script src="dist/js/ui.js"></script>
+		<script src="dist/js/core.js"></script>
+		<script src="dist/js/projects.js"></script>
 
-            </div>
+		<!-- Option A) Directly load Client Library -->
+		<!-- <script src="https://YOUR-DRIVEWORKS-LIVE-SERVER-URL.COM/DriveworksLiveIntegrationClient.min.js" onload="dwClientLoaded()" onerror="dwClientLoadError()"></script> -->
 
-            <nav id="nav-list">
-                <ul>
-                    <li class="logout-list">
-                        <button type="button" id="logout-nav" class="logout-button">
-                            Log out
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-
-            <div class="user-actions">
-
-                <div id="active-username" class="active-username">
-                    <svg class="icon">
-                        <use xlink:href="dist/icons.svg#user" />
-                    </svg>
-                    <span class="username"></span>
-                </div>
-
-                <button type="button" id="logout-button" class="logout-button">
-                    Log out
-                </button>
-
-            </div>
-
-        </aside>
-
-        <section class="content-inner">
-
-            <div class="project-inner">
-
-                <div class="section-title">
-                    <h1>Projects</h1>
-                </div>
-
-                <div id="project-list" class="project-list" style="opacity: 0;">
-                    <div class="project-item skeleton-item">
-                        <div class="skeleton-block"></div>
-                    </div>
-                    <div class="project-item skeleton-item">
-                        <div class="skeleton-block"></div>
-                    </div>
-                    <div class="project-item skeleton-item">
-                        <div class="skeleton-block"></div>
-                    </div>
-                    <div class="project-item skeleton-item">
-                        <div class="skeleton-block"></div>
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
-
-        <button type="button" id="nav-close" class="nav-overlay" title="Close Menu">
-            Close Menu
-        </button>
-
-    </main>
-
-    <!-- Scripts -->
-    <script src="configUser.js"></script>
-    <script src="dist/js/sidebar.js"></script>
-    <script src="dist/js/ui.js"></script>
-    <script src="dist/js/core.js"></script>
-    <script src="dist/js/projects.js"></script>
-
-    <!-- Option A) Directly load Client Library -->
-    <!-- <script src="https://YOUR-DRIVEWORKS-LIVE-SERVER-URL.COM/DriveworksLiveIntegrationClient.min.js" onload="dwClientLoaded()" onerror="dwClientLoadError()"></script> -->
-
-    <!-- Option B) Inject Client Library dynamically from server url in config file -->
-    <script>
-        (function (doc, script) {
-            script = doc.createElement("script");
-            script.src = config.serverUrl + "/DriveWorksLiveIntegrationClient.min.js";
-            script.onerror = () => dwClientLoadError();
-            script.onload = () => dwClientLoaded(); // Custom local function run when client has loaded
-            doc.body.appendChild(script);
-        }(document));
-    </script>
-
-</body>
-
+		<!-- Option B) Inject Client Library dynamically from server url in config file -->
+		<script>
+			;(function (doc, script) {
+				script = doc.createElement("script")
+				script.src =
+					config.serverUrl + "/DriveWorksLiveIntegrationClient.min.js"
+				script.onerror = () => dwClientLoadError()
+				script.onload = () => dwClientLoaded() // Custom local function run when client has loaded
+				doc.body.appendChild(script)
+			})(document)
+		</script>
+	</body>
 </html>
