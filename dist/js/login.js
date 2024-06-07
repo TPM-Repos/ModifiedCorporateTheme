@@ -11,8 +11,8 @@ const URL_QUERY = new URLSearchParams(window.location.search)
 // Elements
 const loginForm = document.getElementById("login-form")
 const loginButton = document.getElementById("login-button")
+const loginGuest = document.getElementById("login-guest-button")
 const loginSSOButton = document.getElementById("login-sso-button")
-const loginDivider = document.getElementById("login-divider")
 const loginNotice = document.getElementById("login-notice")
 const forgotLink = document.getElementById("forgot-link")
 const createLink = document.getElementById("create-link")
@@ -24,12 +24,12 @@ const clientErrorMessage = "Cannot access client."
 const privateErrorMessage = "Please use a non-private window."
 
 // DriveWorks Live Client
-let client
+let client;
 
 	/**
 	 * On page load.
 	 */
-;(async function () {
+(async function () {
 	setLoginCover()
 	addCarouselImages()
 
@@ -40,7 +40,14 @@ let client
 			loginSSOButton.addEventListener("click", handleLoginSSO)
 		} else {
 			loginSSOButton.style.display = "none"
-			loginDivider.style.display = "none"
+		}
+	}
+
+	if (loginGuest) {
+		if (config.allowGuestLogin) {
+			loginGuest.addEventListener("click", handleGuestLogin)
+		} else {
+			loginGuest.style.display = "none"
 		}
 	}
 
@@ -100,27 +107,15 @@ function startPageFunctions() {
 	}
 }
 
-/**
- * Handle login with server using credentials.
- *
- * @param {Object} event - Form submit event.
- */
-async function handleLoginForm(event) {
-	// Prevent default form handling
-	event.preventDefault()
+async function login(type, event = null) {
+	if (event) {
+		event.preventDefault()
+	}
 
 	// Show error if cannot connect to client
 	if (!client) {
 		loginError(clientErrorMessage)
 		return
-	}
-
-	// Get credentials
-	const inputUsername = document.getElementById("login-username").value
-	const inputPassword = document.getElementById("login-password").value
-	const userCredentials = {
-		username: inputUsername,
-		password: inputPassword,
 	}
 
 	try {
@@ -129,7 +124,22 @@ async function handleLoginForm(event) {
 		hideLoginNotice()
 
 		// Start Session
-		const result = await client.loginGroup(GROUP_ALIAS, userCredentials)
+		if (type === "default" || type === null || type === "") {
+			// Get credentials
+			const inputUsername =
+				document.getElementById("login-username").value
+			const inputPassword =
+				document.getElementById("login-password").value
+			const userCredentials = {
+				username: inputUsername,
+				password: inputPassword,
+			}
+			const result = await client.loginGroup(GROUP_ALIAS, userCredentials)
+		} else if (type === "SSO") {
+			const result = await client.loginSSO(GROUP_ALIAS)
+		} else if (type === "Guest") {
+			await client.loginGroup(GROUP_ALIAS)
+		}
 
 		// Show error is login failed
 		if (!result) {
@@ -143,32 +153,16 @@ async function handleLoginForm(event) {
 	}
 }
 
-/**
- * Handle DriveWorks Group login via Single Sign-On (SSO).
- */
-async function handleLoginSSO() {
-	// Show error if cannot connect to client
-	if (!client) {
-		loginError(clientErrorMessage)
-		return
-	}
+function handleLoginForm(event) {
+	login("default", event)
+}
 
-	try {
-		hideLoginNotice()
+function handleGuestLogin() {
+	login("Guest")
+}
 
-		// Start session
-		const result = await client.loginSSO(GROUP_ALIAS)
-
-		// Show error is login failed
-		if (!result) {
-			loginError(genericErrorMessage)
-			return
-		}
-
-		loginSuccess(result)
-	} catch (error) {
-		loginError(genericErrorMessage, error)
-	}
+function handleLoginSSO() {
+	login("SSO")
 }
 
 /**
