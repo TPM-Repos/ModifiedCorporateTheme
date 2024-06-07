@@ -5,7 +5,7 @@
 
 const SERVER_URL = config.serverUrl
 const LOGIN_REDIRECT_URL = config.login.redirectUrl
-const GROUP_ALIAS = config.groupAlias
+let GROUP_ALIAS = config.groupAlias
 const URL_QUERY = new URLSearchParams(window.location.search)
 
 // Elements
@@ -44,7 +44,7 @@ let client;
 	}
 
 	if (loginGuest) {
-		if (config.allowGuestLogin) {
+		if (config.guestLogin.enabled) {
 			loginGuest.addEventListener("click", handleGuestLogin)
 		} else {
 			loginGuest.style.display = "none"
@@ -107,11 +107,7 @@ function startPageFunctions() {
 	}
 }
 
-async function login(type, event = null) {
-	if (event) {
-		event.preventDefault()
-	}
-
+async function login(type) {
 	// Show error if cannot connect to client
 	if (!client) {
 		loginError(clientErrorMessage)
@@ -123,8 +119,17 @@ async function login(type, event = null) {
 		loginButton.classList.add("is-loading")
 		hideLoginNotice()
 
+		let result = null
+
 		// Start Session
-		if (type === "default" || type === null || type === "") {
+		if (type === "SSO") {
+			result = await client.loginSSO(GROUP_ALIAS)
+			result ? loginSuccess(result) : 0
+		} else if (type === "Guest") {
+			GROUP_ALIAS = config.guestLogin.alias
+			result = await client.loginGroup(GROUP_ALIAS)
+			result ? loginSuccess(result, "Guest") : 0
+		} else {
 			// Get credentials
 			const inputUsername =
 				document.getElementById("login-username").value
@@ -134,11 +139,8 @@ async function login(type, event = null) {
 				username: inputUsername,
 				password: inputPassword,
 			}
-			const result = await client.loginGroup(GROUP_ALIAS, userCredentials)
-		} else if (type === "SSO") {
-			const result = await client.loginSSO(GROUP_ALIAS)
-		} else if (type === "Guest") {
-			await client.loginGroup(GROUP_ALIAS)
+			result = await client.loginGroup(GROUP_ALIAS, userCredentials)
+			loginSuccess(result, inputUsername)
 		}
 
 		// Show error is login failed
@@ -146,14 +148,13 @@ async function login(type, event = null) {
 			loginError(genericErrorMessage)
 			return
 		}
-
-		loginSuccess(result, inputUsername)
 	} catch (error) {
 		loginError(genericErrorMessage, error)
 	}
 }
 
 function handleLoginForm(event) {
+	event.preventDefault()
 	login("default", event)
 }
 

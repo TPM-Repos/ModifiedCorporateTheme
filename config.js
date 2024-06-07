@@ -55,11 +55,6 @@ const config = {
 		requireNewSession: true,
 		requireExactAlias: false,
 	},
-	guestLogin: {
-		enabled: true,
-		username: "Guest",
-		password: "",
-	},
 	copyright: {
 		show: true,
 		holder: "TPM",
@@ -84,6 +79,10 @@ const config = {
 	// Whether to show debugging information in the console
 	debug: false,
 	allowSingleSignOn: false,
+	guestLogin: {
+        enabled: true,
+        alias: "Corporate Guest"
+    },
 	accountManagement: {
 		allowForgotPassword: false,
 		allowChangePassword: false,
