@@ -55,6 +55,11 @@ const config = {
 		requireNewSession: true,
 		requireExactAlias: false,
 	},
+	guestLogin: {
+		enabled: true,
+		username: "Guest",
+		password: "",
+	},
 	copyright: {
 		show: true,
 		holder: "TPM",
