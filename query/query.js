@@ -69,29 +69,10 @@ let autoLogin = config.query.autoLogin
 // Get URL query values
 const urlQuery = new URLSearchParams(window.location.search)
 
-// Global client
-let client
-
-/**
- * When external DriveWorks Live client library loads, create client and process request.
- */
-async function dwClientLoaded() {
-	// Create client
-	try {
-		client = new window.DriveWorksLiveClient(SERVER_URL)
-	} catch (error) {
-		debug(error, true)
-		displayErrorMessage("Could not create client.")
-		return
-	}
-
-	await processRequest()
-}
-
 /**
  * Process query request - ensure valid session before handling data.
  */
-async function processRequest() {
+async function startPageFunctions() {
 	// Quick logout using query string "?bye".
 	// Mirrors functionality: https://docs.driveworkspro.com/Topic/WebThemeLogout
 	if (urlQuery.has("bye")) {
@@ -506,19 +487,6 @@ class QueryManager {
 }
 
 /**
- * Handle group logout and redirect to login.
- */
-async function handleLogout() {
-	try {
-		await client.logoutAllGroups()
-	} catch (error) {
-		debug(error, true)
-	}
-
-	redirectToLogin("You have been logged out.", "success")
-}
-
-/**
  * Redirect to login screen, passing query data (if enabled).
  * @param {string} notice - The text to display in the notice on the login screen.
  * @param {string} [state] - The state of the notice - "error", "success", "info".
@@ -597,16 +565,5 @@ function displayErrorMessage(message, clearSession = false) {
 function clearSessionData() {
 	localStorage.removeItem("sessionId")
 	localStorage.removeItem("sessionAlias")
-}
-
-/**
- * Debug console messaging.
- * @param {string|object} message - Error object, or the message string to display in the console.
- * @param {boolean} forceLog - Force logging if debug mode is disabled.
- */
-function debug(message, forceLog = false) {
-	if (DEBUG_MODE || forceLog) {
-		console.log(message)
-	}
 }
 

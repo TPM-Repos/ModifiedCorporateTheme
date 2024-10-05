@@ -7,15 +7,28 @@ const SERVER_URL = config.serverUrl
 let LOGIN_REDIRECT_URL = config.login.redirectUrl
 let GROUP_ALIAS = config.groupAlias
 const URL_QUERY = new URLSearchParams(window.location.search)
-const delay = ms => new Promise(res => setTimeout(res, ms));
+const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
 // Account Management
 const AM_GUEST_ALIAS = config.accountManagement?.guestAlias || config.guestAlias
-const AM_PROJECT_NAME = config.accountManagement?.projectName || "AccountManagement"
+const AM_PROJECT_NAME =
+	config.accountManagement?.projectName || "AccountManagement"
 const AM_QUERY_STRING = `query?alias=${AM_GUEST_ALIAS}&run=${AM_PROJECT_NAME}&DWMacroNavigate=`
-const CREATE_ACCOUNT_URL = AM_QUERY_STRING + (typeof config.accountManagement?.createAccount === 'string' ? config.accountManagement.createAccount : "CreateAccount");
-const FORGOT_PASSWORD_URL = AM_QUERY_STRING + (typeof config.accountManagement?.forgotPassword === 'string' ? config.accountManagement.forgotPassword : "ForgotPassword");
-const RESET_PASSWORD_URL = AM_QUERY_STRING + (typeof config.accountManagement?.resetPassword === 'string' ? config.accountManagement.resetPassword : "ResetPassword");
+const CREATE_ACCOUNT_URL =
+	AM_QUERY_STRING +
+	(typeof config.accountManagement?.createAccount === "string"
+		? config.accountManagement.createAccount
+		: "CreateAccount")
+const FORGOT_PASSWORD_URL =
+	AM_QUERY_STRING +
+	(typeof config.accountManagement?.forgotPassword === "string"
+		? config.accountManagement.forgotPassword
+		: "ForgotPassword")
+const RESET_PASSWORD_URL =
+	AM_QUERY_STRING +
+	(typeof config.accountManagement?.resetPassword === "string"
+		? config.accountManagement.resetPassword
+		: "ResetPassword")
 
 // Elements
 const loginForm = document.getElementById("login-form")
@@ -37,116 +50,86 @@ const clientErrorMessage = "Cannot access client."
 const privateErrorMessage = "Please use a non-private window."
 
 // Gloabl variables
-let interval;
-let imageElements = [];
-let currentIndex = 0;
+let interval
+let imageElements = []
+let currentIndex = 0
 
-// DriveWorks Live Client
-let client;
-
-	/**
-	 * On page load.
-	 */
-(async function () {
+/**
+ * On page load.
+ */
+;(async function () {
 	// Check localStorage support (show warning if not e.g. <= iOS 10 Private Window)
 	if (!localStorageSupported()) {
 		removeSkeleton()
 		loginError(privateErrorMessage)
 		return
 	}
-
-	setUsernameType()
-	setLoginCover()
-	addCarouselImages()
-
-	loginForm.addEventListener("submit", handleLoginForm)
-
-	if (loginPassword && config.passwordRequired) {
-		loginPassword.required = true
-	}
-
-	if (loginSSOButton) {
-		if (config.allowSingleSignOn) {
-			loginSSOButton.addEventListener("click", handleLoginSSO)
-			loginSSOButton.classList.remove("hidden")
-			loginSSOButton.classList.add("skeleton-block")
-		}
-	}
-
-	if (loginGuest) {
-		if (config.guestLogin.enabled) {
-			loginGuest.addEventListener("click", handleGuestLogin)
-			loginGuest.classList.remove("hidden")
-			loginGuest.classList.add("skeleton-block")
-		}
-	}
-
-	if (forgotLink) {
-		if (config.accountManagement.forgotPassword) {
-			forgotLink.href = FORGOT_PASSWORD_URL
-			forgotLink.classList.remove("hidden")
-		}
-	}
-
-	if (loginButton) {
-		if (config.disableRegularLogin) {
-			loginButton.classList.add("hidden")
-		}
-	}
-
-	if (createAccountButton) {
-		if (config.accountManagement.createAccount) {
-			createAccountButton.addEventListener("click", createAccount)
-			createAccountButton.classList.remove("hidden")
-			loginDivider.classList.remove("hidden")
-			createAccountButton.classList.add("skeleton-block")
-		}
-	}
-	showLoginNotice()
-	setLoginColumnLocation()
-	setCopyright()
-	handlePasswordToggle()
-	// how long until timing out trying to connect?
-	await delay(5000)
-	removeSkeleton()
 })()
-
-/**
- * Create client.
- */
-async function dwClientLoaded() {
-	try {
-		client = new window.DriveWorksLiveClient(SERVER_URL)
-	} catch (error) {
-		loginError(clientErrorMessage, error)
-		removeSkeleton()
-	}
-
-	// Quick Logout (?bye)
-	// https://docs.driveworkspro.com/Topic/WebThemeLogout
-	if (URL_QUERY.has("bye")) {
-		await forceLogout()
-	}
-
-	if(client == null) {
-		dwClientLoadError()
-	} else {
-		startPageFunctions()
-		enableButtons()
-	}
-
-}
 
 /**
  * Start page functions.
  */
-function startPageFunctions() {
+async function startPageFunctions() {
 	try {
 		// Check if logged in, and redirect
 		checkExistingLogin()
+		setUsernameType()
+		setLoginCover()
+		addCarouselImages()
+		handlePasswordToggle()
+
+		loginForm.addEventListener("submit", handleLoginForm)
+
+		if (loginPassword && config.passwordRequired) {
+			loginPassword.required = true
+		}
+
+		if (loginSSOButton) {
+			if (config.allowSingleSignOn) {
+				loginSSOButton.addEventListener("click", handleLoginSSO)
+				loginSSOButton.classList.remove("hidden")
+				loginSSOButton.classList.add("skeleton-block")
+			}
+		}
+
+		if (loginGuest) {
+			if (config.guestLogin.enabled) {
+				loginGuest.addEventListener("click", handleGuestLogin)
+				loginGuest.classList.remove("hidden")
+				loginGuest.classList.add("skeleton-block")
+			}
+		}
+
+		if (forgotLink) {
+			if (config.accountManagement.forgotPassword) {
+				forgotLink.href = FORGOT_PASSWORD_URL
+				forgotLink.classList.remove("hidden")
+			}
+		}
+
+		if (loginButton) {
+			if (config.disableRegularLogin) {
+				loginButton.classList.add("hidden")
+			}
+		}
+
+		if (createAccountButton) {
+			if (config.accountManagement.createAccount) {
+				createAccountButton.addEventListener("click", createAccount)
+				createAccountButton.classList.remove("hidden")
+				loginDivider.classList.remove("hidden")
+				createAccountButton.classList.add("skeleton-block")
+			}
+		}
+		showLoginNotice()
+		setLoginColumnLocation()
+		setCopyright()
 	} catch (error) {
-		handleGenericError(error)
+		debug(error)
+		removeSkeleton()
 	}
+	// how long until timing out trying to connect?
+	await delay(5000)
 	removeSkeleton()
 }
 
@@ -167,8 +150,7 @@ async function login(type) {
 		// Start Session
 		if (type === "default" || type === null || type === "") {
 			// Get credentials
-			inputUsername =
-				document.getElementById("login-username").value
+			inputUsername = document.getElementById("login-username").value
 			const inputPassword =
 				document.getElementById("login-password").value
 			const userCredentials = {
@@ -253,9 +235,16 @@ function loginSuccess(result, username) {
 		)}`
 		return
 	}
-	
-	if (config.login.redirectGuestUrl && config.guestLogin.enabled && config.guestLogin.alias) {
-		LOGIN_REDIRECT_URL = (storedGroupAlias === config.guestLogin.alias)? config.login.redirectGuestUrl : config.login.redirectUrl
+
+	if (
+		config.login.redirectGuestUrl &&
+		config.guestLogin.enabled &&
+		config.guestLogin.alias
+	) {
+		LOGIN_REDIRECT_URL =
+			storedGroupAlias === config.guestLogin.alias
+				? config.login.redirectGuestUrl
+				: config.login.redirectUrl
 	}
 
 	// Redirect to default location
@@ -270,7 +259,7 @@ function loginSuccess(result, username) {
  */
 function loginError(noticeText, error = null) {
 	if (error) {
-		handleGenericError(error)
+		debug(error)
 	}
 
 	// Remove loading state
@@ -357,8 +346,15 @@ async function checkExistingLogin() {
 		return
 	}
 
-	if (config.login.redirectGuestUrl && config.guestLogin.enabled && config.guestLogin.alias) {
-		LOGIN_REDIRECT_URL = (storedGroupAlias === config.guestLogin.alias)? config.login.redirectGuestUrl : config.login.redirectUrl
+	if (
+		config.login.redirectGuestUrl &&
+		config.guestLogin.enabled &&
+		config.guestLogin.alias
+	) {
+		LOGIN_REDIRECT_URL =
+			storedGroupAlias === config.guestLogin.alias
+				? config.login.redirectGuestUrl
+				: config.login.redirectUrl
 	}
 
 	try {
@@ -368,7 +364,7 @@ async function checkExistingLogin() {
 		// Redirect to initial location
 		window.location.replace(LOGIN_REDIRECT_URL)
 	} catch (error) {
-		handleGenericError(error)
+		debug(error)
 	}
 }
 
@@ -380,7 +376,7 @@ async function forceLogout() {
 	try {
 		await client.logoutAllGroups()
 	} catch (error) {
-		handleGenericError(error)
+		debug(error)
 	}
 
 	// Clear session information from storage.
@@ -410,7 +406,7 @@ function localStorageSupported() {
  *
  * @param {Object} error - The error object.
  */
-function handleGenericError(error) {
+function debug(error) {
 	console.log(error)
 }
 
@@ -459,60 +455,65 @@ function setLoginColumnLocation() {
 }
 
 function addCarouselImages() {
-	if (!config.images.carousel || config.images.carousel.enabled === false || !config.images.carousel.images || config.images.carousel.images.length === 0) {
-		return;
+	if (
+		!config.images.carousel ||
+		config.images.carousel.enabled === false ||
+		!config.images.carousel.images ||
+		config.images.carousel.images.length === 0
+	) {
+		return
 	}
 
 	if (config.images.carousel.images.length === 1) {
 		// if there is only one image, set it as the background image
-		loginCover.style.backgroundImage = `url(${config.images.carousel.images[0]})`;
-		return;
+		loginCover.style.backgroundImage = `url(${config.images.carousel.images[0]})`
+		return
 	}
 
 	// otherwise add an image element for each image in the array, set the first image as active, and transition images every X seconds
 
 	// Create image elements
 	config.images.carousel.images.forEach((image, index) => {
-		const imageElement = document.createElement("img");
-		imageElement.src = image;
-		imageElement.id = `cover-image-${index+1}`;
-		imageElement.loading = "lazy";
-		imageElement.classList.add("login-cover");
-		imageElements.push(imageElement);
+		const imageElement = document.createElement("img")
+		imageElement.src = image
+		imageElement.id = `cover-image-${index + 1}`
+		imageElement.loading = "lazy"
+		imageElement.classList.add("login-cover")
+		imageElements.push(imageElement)
 	})
 
 	// Add image elements to login cover
-	loginCover.append(...imageElements);
+	loginCover.append(...imageElements)
 
 	// set the first image as active
-	imageElements[0].classList.add("active");
+	imageElements[0].classList.add("active")
 	// eager load this image
-	imageElements[0].loading = "eager";
+	imageElements[0].loading = "eager"
 
 	// default interval is 7500ms
-	interval = 7500;
+	interval = 7500
 
 	if (config.images.carousel.interval) {
 		// convert interval to milliseconds
-		interval = config.images.carousel.interval * 1000;
+		interval = config.images.carousel.interval * 1000
 	}
 
 	// Call the transitionImages function every X seconds (milliseconds)
-	setInterval(transitionImages, interval);
+	setInterval(transitionImages, interval)
 }
 
 // a function to transition the opacity of the images every X seconds
 function transitionImages() {
 	// set the current image inactive
-	imageElements[currentIndex].classList.remove("active");
+	imageElements[currentIndex].classList.remove("active")
 	// roll over the current index if it's at the end of the array
 	if (currentIndex >= imageElements.length - 1) {
-		currentIndex = 0;
+		currentIndex = 0
 	} else {
-		currentIndex++;
+		currentIndex++
 	}
 	// set the current image as active
-	imageElements[currentIndex].classList.add("active");
+	imageElements[currentIndex].classList.add("active")
 }
 
 // function to set the copyright information
@@ -530,8 +531,7 @@ function setCopyright() {
 }
 
 function setUsernameType() {
-	if(!config.usernameType || !usernameInput || !usernameLabel)
-		return
+	if (!config.usernameType || !usernameInput || !usernameLabel) return
 
 	let type = config.usernameType
 	// force to all lowercase and remove - if set to e-mail
@@ -550,4 +550,3 @@ function dwClientLoadError() {
 	loginError(clientErrorMessage)
 	removeSkeleton()
 }
-

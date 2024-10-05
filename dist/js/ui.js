@@ -10,7 +10,7 @@ const rs = document.querySelector(":root").style
 /**
  * Run on page load.
  */
-;(() => {
+document.addEventListener("DOMContentLoaded", function() {
 	console.log("This site is running Modified Corporate Theme from TPM")
 	console.log(
 		"You can learn more here: https://github.com/TPM-Repos/ModifiedCorporateTheme",

@@ -15,16 +15,11 @@ const CREATE_ACCOUNT_URL = AM_QUERY_STRING + (typeof config.accountManagement?.c
 const FORGOT_PASSWORD_URL = AM_QUERY_STRING + (typeof config.accountManagement?.forgotPassword === 'string' ? config.accountManagement.forgotPassword : "ForgotPassword");
 const RESET_PASSWORD_URL = AM_QUERY_STRING + (typeof config.accountManagement?.resetPassword === 'string' ? config.accountManagement.resetPassword : "ResetPassword");
 
-
 // Elements
 const passwordResetLink = document.getElementById("reset-password")
 
-let client
-
-	/**
-	 * Run on page load.
-	 */
-;(() => {
+// run this function on page load
+document.addEventListener("DOMContentLoaded", function() {
 	// Check if Session Id exists
 	checkStoredSessionId()
 	showUsername()
@@ -33,41 +28,7 @@ let client
 	setWatermark()
 	handleMobileNavigationToggle()
 	passwordReset()
-})()
-
-/**
- * DriveWorks Live client library loaded.
- */
-function dwClientLoaded() {
-	try {
-		// Create client
-		client = new window.DriveWorksLiveClient(SERVER_URL)
-
-		// Set session id from stored value - set by and passed from login page
-		client._sessionId = getLocalSession()
-	} catch (error) {
-		dwClientLoadError()
-		return
-	}
-
-	// Quick Logout (?bye)
-	// https://docs.driveworkspro.com/Topic/WebThemeLogout
-	const coreQuery = new URLSearchParams(window.location.search)
-	if (coreQuery.has("bye")) {
-		handleLogout()
-		return
-	}
-
-	// Start individual page functions
-	startPageFunctions()
-}
-
-/**
- * DriveWorks Live client library load error.
- */
-function dwClientLoadError() {
-	redirectToLogin("Cannot access client.", "error")
-}
+})
 
 /**
  * Check Session Id exists locally.
@@ -155,18 +116,6 @@ function logoutRedirect() {
 
 	// Redirect
 	window.location.replace(config.logout.redirectUrl)
-}
-
-/**
- * Logout action.
- */
-async function handleLogout() {
-	try {
-		await client.logoutAllGroups()
-		logoutRedirect()
-	} catch (error) {
-		handleGenericError(error)
-	}
 }
 
 /**
@@ -293,15 +242,6 @@ function detectTouchDevice() {
  * Get local Session Id from storage - between pages.
  */
 getLocalSession = () => localStorage.getItem("sessionId")
-
-/**
- * Handle generic error.
- *
- * @param {Object} error - Error object to handle.
- */
-function handleGenericError(error) {
-	console.log(error)
-}
 
 /**
  * Ensure DateTime provided is specified as UTC.
