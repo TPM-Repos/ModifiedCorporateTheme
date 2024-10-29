@@ -206,6 +206,10 @@ version: "1.3.0",
 			// not recommended to use %
             radius: "2rem",
             color: "#00AEEF",
+			textColor: "white",
+			colorHover: "rgb(36, 58, 118)",
+			textColorHover: "white",
+			border: "none",
         },
         logo: {
             width: "50%"
