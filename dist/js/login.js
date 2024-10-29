@@ -257,7 +257,7 @@ function loginSuccess(result, username) {
 	}
 	
 	if (config.login.redirectGuestUrl && config.guestLogin.enabled && config.guestLogin.alias) {
-		LOGIN_REDIRECT_URL = (storedGroupAlias === config.guestLogin.alias)? config.login.redirectGuestUrl : config.login.redirectUrl
+		LOGIN_REDIRECT_URL = (GROUP_ALIAS === config.guestLogin.alias)? config.login.redirectGuestUrl : config.login.redirectUrl
 	}
 
 	// Redirect to default location
