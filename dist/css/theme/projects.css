@@ -97,17 +97,8 @@
 	justify-content: center;
 	padding: 0.75em 1.5em;
 	margin: auto 0 0 0;
-	border-radius: var(--button-radius, 100em);
-	border: none;
-	background-color: var(--color-neutral);
-	color: #fff;
-	cursor: pointer;
 	font-size: 1em;
 	font-weight: 600;
-	transition: background-color 0.3s ease, filter 0.3s ease;
-}
-.project-item .project-action:hover {
-	filter: brightness(110%);
 }
 
 /* Screen: Tablet-up */

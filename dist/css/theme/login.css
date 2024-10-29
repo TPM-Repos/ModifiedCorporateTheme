@@ -37,9 +37,9 @@ input:focus {
 button {
 	padding: 1rem 1.25rem;
 	border-radius: var(--button-radius, 100em);
-	border: none;
+	border: var(--button-border, none);
 	background-color: var(--button-color, --color-neutral, #4299e1);
-	color: #fff;
+	color: var(--button-text-color, #fff);
 	text-align: center;
 	font-weight: 600;
 	cursor: pointer;
@@ -47,7 +47,8 @@ button {
 }
 
 button:hover {
-	filter: brightness(110%);
+	background-color: var(--button-color-hover, #4299e166);
+	color: var(--button-text-color-hover, #fff);
 }
 
 button:disabled {
@@ -219,12 +220,6 @@ button:disabled:hover {
 
 .login-button.is-loading svg {
 	display: block;
-}
-
-.pill {
-	background-color: transparent;
-	border: solid 2px var(--button-color, black);
-	color: var(--color-primary);
 }
 
 .login-divider {
