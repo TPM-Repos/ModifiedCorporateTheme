@@ -31,6 +31,7 @@ version: "1.3.0",
 	history: {
 		specLimitOnPage: 10,
 		dateOrder: "desc",
+		showRunningSpecs: false,
 	},
 	project: {
 		// you may put "logout" instead of a page location

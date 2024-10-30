@@ -3,8 +3,9 @@
  * SPECIFICATION HISTORY
  */
 
-const defaultLimit = config.history.specLimitOnPage
-const defaultDateOrder = config.history.dateOrder
+const defaultLimit = config.history.specLimitOnPage ?? 10
+const defaultDateOrder = config.history.dateOrder ?? "desc"
+const defaultRunningSpecVisibility = config.history.showRunningSpecs ?? false
 let renderedProperties = []
 
 const storageKeyName = "historyFilterName"
