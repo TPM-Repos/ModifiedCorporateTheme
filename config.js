@@ -95,13 +95,7 @@ version: "1.3.0",
 	debug: false,
 	allowSingleSignOn: false,
 	disableRegularLogin: false,
-	guestLogin: {
-		// Adds button to login that allows login as Guest
-		// Requires an alias with username and password to be set in the DriveWorksConfigUser.xml file
-		enabled: true,
-		// uses guestAlias, but can be set to a different alias by uncommenting the following line
-		// alias: "Guest",
-	},
+	guestLogin: true,
 	// In order to use the Account Management features you will need a project in your DriveWorks Group
 	// You will also need to allow all users (and Guest) to run the Macro called Navigate
 	// CreateAccount and ForgotPassword require the macro to be enabled in the Guest Alias
