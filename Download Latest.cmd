@@ -1,4 +1,4 @@
-@REM Version 1.3.0
+@REM Version 1.3.1
 @echo off
 echo This script will download the latest version of the Modified Corporate Theme from the TPM-Repos GitHub repository.
 echo It will download them into the current folder which is
