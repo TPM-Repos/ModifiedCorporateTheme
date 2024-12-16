@@ -947,7 +947,7 @@ function showConfirmationDialog(confirmAction, message = "Are you sure?") {
 	confirmButton.onclick = () => {
 		dialog.classList.add("is-loading")
 		confirmAction()
-		document.removeEventListener("keydown", dismissEscKey)
+		dismissDialog()
 	}
 
 	messageBox.appendChild(confirmButton)
