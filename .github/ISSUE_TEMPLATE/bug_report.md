@@ -3,7 +3,7 @@ name: Bug Report
 about: Report an issue with a TPM MCT website implementation
 title: '[BUG] '
 labels: bug
-assignees: JosephCaswell
+assignees: jccaswell
 ---
 
 <!--
@@ -35,34 +35,24 @@ For new feature requests, please consider TSIT (TPM Serverside Integration Templ
 
 ### Login Credentials
 <!-- Choose one: -->
-- [ ] Credentials stored in BitWarden (provide reference)
-- [ ] Credentials: <!-- If not in BitWarden -->
-  - Username:
-  - Password:
+- [ ] Credentials stored in BitWarden
+- [ ] Credentials Sent via Chat or Email: <!-- If not in BitWarden -->
 
 ### Browser Information
-- Browser(s): <!-- e.g. Chrome 120.0.6099.109, Firefox 121.0 -->
-- OS: <!-- e.g. Windows 11, macOS Sonoma -->
-- Device: <!-- e.g. Desktop, iPhone 14 -->
+- Browser(s): <!-- e.g. Chrome, Firefox -->
+- OS: <!-- e.g. Windows 11, Windows Server, Android, iPhone -->
+
+### Affected Customer(s)
+<!-- Which customers does this affect, and which SalesForce project is this billable to? -->
 
 ## Additional Context
 
 ### Screenshots/Recordings
 <!-- Add screenshots or screen recordings to help explain your problem -->
-<!-- You can drag and drop images here, or use a tool like ShareX for recordings -->
+<!-- You can drag and drop images here, or use a tool like ScreenToGif for recordings -->
 
 ### Expected Resolution
 <!-- What kind of help are you looking for? What would resolve this issue for you? -->
 
 ### Additional Notes
 <!-- Add any other context about the problem here -->
-
----
-
-<!-- 
-Tips for good bug reports:
-- Use clear and descriptive title
-- Include specific steps to reproduce
-- Attach relevant screenshots/recordings
-- Mention any related issues
--->
