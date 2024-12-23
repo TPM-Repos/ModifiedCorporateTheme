@@ -1,3 +1,5 @@
+> ⚠️ **Long Term Support Notice**: This project is now in LTS mode. While we will continue to provide bug fixes and security updates for existing customers, we are no longer accepting feature requests or major enhancements. For new projects, we recommend using our server-side solution: TSIT (TPM Serverside Integration Template). Please contact us if you are interestewd in learning more: driveworksteam@tpm.com
+
 # TPM Modified Corporate Theme (MCT)
 
 A highly customizable DriveWorks Live web interface based on DriveWorks' Corporate Theme template.
