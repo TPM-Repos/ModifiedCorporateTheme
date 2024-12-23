@@ -1,111 +1,139 @@
-# DriveWorks Live - Integration Theme Example - Corporate Website
+# TPM Modified Corporate Theme (MCT)
 
-### Release: 21.1
+A highly customizable DriveWorks Live web interface based on DriveWorks' Corporate Theme template.
 
-#### Minimum DriveWorks Version: 21.0
+## Overview
 
-An example of a full Corporate Website built upon the DriveWorks Live Integration Theme API.
-Its features are based on the Web Theme's "Corporate Skin", and controlled via a config file.
+TPM's Modified Corporate Theme (MCT) is a fork of DriveWorks' Integration Theme Corporate Site example that adds extensive customization options through a configuration file system. It provides a professional, modern interface for DriveWorks Live while maintaining the core functionality of the original template.
 
-This template is designed to be configured and used as is, or the starting point for a larger application.
+### Features
 
----
+- All features from the original DriveWorks Corporate Theme
+- Extensive customization options via configuration file
+- Simplified deployment through configuration separation
+- Enhanced login page with carousel support
+- Configurable navigation and branding
+- Support for guest users and SSO
+- Account management integration
+- Customizable styling including fonts, colors, and layouts
 
-Please note: DriveWorks are not accepting pull requests for this example.
-Join our [online community](https://my.driveworks.co.uk) for discussion, resources and to suggest other examples.
+## Prerequisites
 
----
+- DriveWorks Live (Version 21.0 or later)
+- Web server capable of hosting static files
+- Basic understanding of DriveWorks Live configuration
+- Knowledge of HTML/CSS/JavaScript for advanced customizations
 
-### Overview:
+## Installation
 
--   Dynamically injects the DriveWorks Live Client library script using the configured server url (see `configUser.js`).
-    -   Provides an example of loading from a static URL, if preferred.
--   Connects to the DriveWorks Live Integration Theme API.
--   'Login' view.
-    -   Customizable login screen, with credentials attached to a config file.
--   'Projects' view.
-    -   Renders a list of available Projects.
-    -   Orders Projects alphabetically by name.
-    -   Shown on successful login by default - redirect configurable.
--   'DriveApps' view.
-    -   Renders a list of available DriveApps.
-    -   Orders DriveApps alphabetically by name.
--   'Run' view.
-    -   Render and transition Specifications.
-    -   Tab title shows name of running Specification.
-    -   Optional warning before navigating from page (where supported).
-        -   Set `config.run.showWarningOnExit` to `true` to enable.
-    -   Load custom scripts (`.js`) or styles (`.css`) with file name matching the current Project name.
-        -   Implement advanced customizations using JavaScript and CSS.
-        -   See `/custom-project-assets` for examples.
-        -   See `config.run.loadCustomProjectAssets` and set `scripts` or `styles` to `true` to enable.
--   'Details' view.
-    -   View Specification details.
-    -   Access documents and view images in a basic carousel.
-    -   Set `config.details.showStartNewSpecificationAction` to `true` to enable an action to start a new Specification.
--   'History' view.
-    -   Search and filter Specifications.
-    -   Change ordering using OData.
--   'Query' function.
-    -   Create new or edit existing Specifications through a URL query.
-    -   Similar to the [DriveWorks Live "Integration Module"](https://docs.driveworkspro.com/topic/IntegrationModuleLive).
-    -   Examples:
-        -   /query?run={ProjectName}
-        -   /query?specification={SpecificationId}
-        -   /query?specification={SpecificationId}&transition={TransitionName}
-        -   /query?specification={SpecificationId}&operation={OperationName}
+1. Clone this repository or download as a ZIP file
+2. Copy `config.js` to create your `configUser.js` file
+3. Configure your DriveWorks Live Integration Theme settings:
+   - Set up Group Aliases in `DriveWorksConfigUser.xml`
+   - Configure CORS settings for your domain
+   - Enable HTTPS if using SSO or cross-domain access
+4. Update `configUser.js` with your specific settings:
+   ```javascript
+   const config = {
+     serverUrl: "https://your-driveworks-server.com",
+     groupAlias: "your-group-alias",
+     // Additional configuration...
+   }
+   ```
+5. Host the files on your web server
 
-### To use:
+## Configuration
 
-1. Clone this repository, or download as a `.zip` file.
+### Essential Settings
 
-2. Enter your Integration Theme details into `configUser.js`.
+| Setting | Type | Description | Default |
+|---------|------|-------------|---------|
+| `serverUrl` | String | Full URL to DriveWorks Live server | `""` |
+| `groupAlias` | String | Public alias for DriveWorks Group | `""` |
+| `guestAlias` | String | Alias for guest access | `""` |
 
-    - `serverUrl` - The URL that hosts your Integration Theme, including any ports.
-    - `groupAlias` - The public alias created for the Group containing the data to display - as configured in `DriveWorksConfigUser.xml`.
-        - This _must_ be specified for each Group you wish to use.
-        - This allows you to mask the true Group name publicly, if desired.
-        - See [Integration Theme Settings](https://docs.driveworkspro.com/Topic/IntegrationThemeSettings) for additional guidance.
-    - `specificationPingInterval` - [optional] The interval at which to 'ping' the server automatically.
-        - This ensures a session is kept alive during inactivity, if desired.
-    - _Optional:_
-        - Configure various redirects (login, logout, Specification close/cancel).
-        - Configure update intervals (Details view).
-        - Configure 'Query' function settings and defaults.
+### Login Settings
 
-3. Ensure that the Integration Theme server is running, using any of the available methods (e.g. Personal Web Edition, DriveWorks Live, IIS).
+| Setting | Type | Options | Description |
+|---------|------|---------|-------------|
+| `login.columnLocation` | String | `"left"`, `"right"`, `"center"` | Position of login form |
+| `login.redirectUrl` | String | Valid URL path | Page to load after login |
+| `usernameType` | String | `"Username"`, `"Email Address"` | Login field type |
 
-    - For more information, see [Selecting the Integration Theme](https://docs.driveworkspro.com/Topic/IntegrationThemeSelect).
+### Visual Customization
 
-4. Host the example locally or on a remote server.
-    - Ensure `<corsOrigins>` in `DriveWorksConfigUser.xml` permits requests from this location.
-      See [Integration Theme Settings](https://docs.driveworkspro.com/Topic/IntegrationThemeSettings) for additional guidance.
+| Setting | Type | Description | Example |
+|---------|------|-------------|---------|
+| `styles.text.font` | String | Font family name | `"Poppins"` |
+| `styles.color.primary` | String | CSS color value | `"#000000"` |
+| `styles.button.radius` | String | CSS border-radius | `"2rem"` |
 
-### Troubleshooting:
+[View full configuration reference](#configuration-reference)
 
-If encountering any issues, please check the browser's console for error messages (F12).
+## Usage
 
-If you are unable to use the dynamic library loading demonstrated in this example:
+### Basic Setup
 
-1. In all `.html` files, uncomment "Option A" & replace "YOUR-DRIVEWORKS-LIVE-SERVER-URL.COM" with the URL of your own DriveWorks Live server that is serving `DriveWorksLiveIntegrationClient.min.js` - including any ports.
-    - This should be the URL that hosts the Integration Theme, and serves it's landing page.
-    - To check that this URL is correct, attempt to load `DriveWorksLiveIntegrationClient.min.js` in a browser. It should return a minified code library.
-2. Remove the "Option B" `<script>` tag.
+The most common configuration involves setting up server connection and basic branding:
 
-### Potential Issues:
+```javascript
+const config = {
+  serverUrl: "https://dw21.api.yourdomain.com",
+  groupAlias: "public",
+  siteName: "Your Company",
+  images: {
+    login: "dist/img/your-logo.png",
+    sidebar: "dist/img/your-logo-white.png"
+  }
+}
+```
 
--   When serving this example for a domain different to your DriveWorks Live server, e.g. api.my-site.com from www.company.com, 'SameSite' cookie warnings may be thrown when the Client SDK attempts to store the current session id in a cookie.
-    -   This appears as "Error: 401 Unauthorized" in the browser console, even with the correct configuration set.
-    -   To resolve:
-        -   Ensure you are running DriveWorks 18.2 or above.
-        -   Ensure HTTPS is enabled in DriveWorks Live's settings.
-        -   Ensure a valid SSL certificate has been configured via `DriveWorksConfigUser.xml`.
-        -   Ensure if using an incognito/private window, third-party cookies are not blocked (see browser settings).
-        -   See [Integration Theme Settings](https://docs.driveworkspro.com/Topic/IntegrationThemeSettings) for additional guidance.
+### Advanced Customization
 
----
+For needs beyond configuration options:
 
-This source code has been made available to demonstrate how you can integrate with DriveWorks using the DriveWorks Live API.
-This code is provided under the MIT license. For more details, see the included LICENSE file.
+1. Fork this repository
+2. Make structural changes as needed
+3. Maintain a separate branch for your customizations
+4. Pull updates from the main repository as needed
 
-The example requires that you have the latest DriveWorks Live SDK installed, operational and remotely accessible.
+
+## Reporting Issues
+
+1. Check existing issues to avoid duplicates
+2. Use the issue templates when available
+3. Include:
+   - MCT version
+   - DriveWorks Live version
+   - Clear description of the problem
+   - Steps to reproduce
+   - Expected vs actual behavior
+   - Screenshots if relevant
+
+## License
+
+The original DriveWorks Integration Theme Corporate Site is licensed under MIT.
+TPM reserves the right to their modifications. Contact us directly if you would like to use this template: driveworksteam@tpm.com
+
+## Configuration Reference
+
+[View full configuration reference](#configuration-reference)
+
+## Support
+
+For support:
+
+1. Check the documentation
+2. Search existing issues
+3. Open a new issue following the guidelines
+4. Contact TPM directly for enterprise support driveworksteam@tpm.com
+
+## Authors
+
+- Joseph C. Caswell - TPM, Inc.
+- TPM Development Team
+
+## Acknowledgments
+
+- Based on DriveWorks' Integration Theme Corporate Site
+- DriveWorks Development Team for the original template
