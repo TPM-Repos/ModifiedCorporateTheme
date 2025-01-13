@@ -30,7 +30,6 @@ let client
 	showUsername()
 	attachLogoutActions()
 	detectTouchDevice()
-	setWatermark()
 	handleMobileNavigationToggle()
 	passwordReset()
 })()
