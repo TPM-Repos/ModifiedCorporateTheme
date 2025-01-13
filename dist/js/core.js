@@ -13,8 +13,7 @@ const AM_PROJECT_NAME = config.accountManagement?.projectName || "AccountManagem
 const AM_QUERY_STRING = `query?alias=${AM_GUEST_ALIAS}&run=${AM_PROJECT_NAME}&DWMacroNavigate=`
 const CREATE_ACCOUNT_URL = AM_QUERY_STRING + (typeof config.accountManagement?.createAccount === 'string' ? config.accountManagement.createAccount : "CreateAccount");
 const FORGOT_PASSWORD_URL = AM_QUERY_STRING + (typeof config.accountManagement?.forgotPassword === 'string' ? config.accountManagement.forgotPassword : "ForgotPassword");
-const RESET_PASSWORD_URL = AM_QUERY_STRING + (typeof config.accountManagement?.resetPassword === 'string' ? config.accountManagement.resetPassword : "ResetPassword");
-
+const RESET_PASSWORD_URL = `run.html?project=${AM_PROJECT_NAME}&DWMacroNavigate=` + (typeof config.accountManagement?.resetPassword === 'string' ? config.accountManagement.resetPassword : "ResetPassword");
 
 // Elements
 const passwordResetLink = document.getElementById("reset-password")
