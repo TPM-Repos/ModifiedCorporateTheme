@@ -1002,3 +1002,42 @@ function attachLogoutButtons() {
 	}
 }
 
+/**
+ * Set username in header
+ */
+function showHeaderUsername() {
+	const usernameOutput = document.querySelector("header .username")
+	const username = localStorage.getItem("sessionUsername")
+	if (!username || !usernameOutput) {
+		return
+	}
+
+	usernameOutput.innerHTML = username
+}
+
+const profileButton = document.getElementById("profileButton")
+const dropdownMenu = document.getElementById("dropdownMenu")
+
+profileButton.addEventListener("click", (e) => {
+	e.stopPropagation()
+	dropdownMenu.classList.toggle("active")
+
+	// Set dropdown width to match button width
+	const buttonWidth = profileButton.offsetWidth
+	dropdownMenu.style.width = `${buttonWidth}px`
+})
+
+document.addEventListener("click", (e) => {
+	if (!dropdownMenu.contains(e.target)) {
+		dropdownMenu.classList.remove("active")
+	}
+})
+
+// by default the header is shown
+// to hide it we need to set root --header-height to 0
+// we can hide or show it by setting showHeader to true or false
+// we know if this is a project if we have a project name
+if((QUERY_PROJECT_NAME && !config.project.showHeader) || (QUERY_DRIVE_APP_ALIAS && !config.driveApp.showHeader)) {
+	document.querySelector("header").classList.add("hidden");
+}
+

@@ -219,3 +219,105 @@ button.action-transition {
 	border-radius: 50%;
 	animation: spin 1s linear infinite;
 }
+
+:root {
+	--header-height: var(--header-height-set, 64px);
+	--shadow-color: rgba(0, 0, 0, 0.1);
+	--menu-background: white;
+	--hover-background: #f5f5f5;
+}
+
+body {
+	margin: 0;
+	font-family: system-ui, -apple-system, sans-serif;
+}
+
+header {
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: var(--header-height);
+	background: white;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	box-shadow: 0 2px 4px var(--shadow-color);
+	z-index: 100;
+}
+
+#profileButton {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 2px 16px;
+	border: none;
+	background: none;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	position: relative;
+	box-shadow: none;
+}
+
+#profileButton:hover {
+	background-color: var(--hover-background);
+}
+
+header svg {
+	width: 20px;
+	height: 20px;
+}
+
+.dropdown-menu {
+	position: absolute;
+	top: var(--header-height);
+	right: 0;
+	background: var(--menu-background);
+	box-shadow: 0 4px 12px var(--shadow-color);
+	min-width: 200px;
+	opacity: 0;
+	transform: translateY(calc(0 - var(--header-height)));
+	pointer-events: none;
+	transition: all 0.2s ease-out;
+	width: max-content;
+}
+
+/* Mobile: Max width 100% */
+@media (max-width: 768px) {
+	.dropdown-menu {
+		max-width: calc(100vw - 48px);
+	}
+}
+
+/* Desktop: Max width 50% */
+@media (min-width: 769px) {
+	.dropdown-menu {
+		max-width: 50vw;
+	}
+}
+
+.dropdown-menu.active {
+	opacity: 1;
+	transform: translateY(0);
+	pointer-events: all;
+}
+
+.dropdown-menu a {
+	padding: 12px 16px;
+	color: inherit;
+	text-decoration: none;
+	transition: background-color 0.2s;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	align-items: center;
+}
+
+.dropdown-menu a:hover {
+	background-color: var(--hover-background);
+}
+

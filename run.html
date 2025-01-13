@@ -44,6 +44,30 @@
 	</head>
 
 	<body class="template-run">
+		<header class="header">
+			<button class="profile-button" id="profileButton">
+				<svg>
+					<use xlink:href="dist/icons.svg#user"></use>
+				</svg>
+				<span data-username="" class="username is-shown" id="active-username">
+					Customer
+				</span>
+			</button>
+			<div class="dropdown-menu" id="dropdownMenu">
+				<a href="run.html?project=AccountManagement">
+					<svg>
+						<use xlink:href="dist/icons.svg#account-cog"></use>
+					</svg>
+					Account Management</a>
+				<a href="run.html?project=AccountManagement&DWMacroNavigate=ResetPassword">Reset Password</a>
+				<a href="?bye" data-logout="">
+					<svg>
+						<use xlink:href="dist/icons.svg#logout"></use>
+					</svg>
+					Log out</a>
+			</div>
+		</header>
+		
 		<main class="content-wrap">
 			<aside
 				id="content-navigation"

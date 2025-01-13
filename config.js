@@ -37,11 +37,13 @@ version: "1.3.1",
 		// you may put "logout" instead of a page location
 		redirectOnClose: "details.html",
 		redirectOnCancel: "projects.html",
+		showHeader: false,
 	},
 	driveApp: {
 		// you may put "logout" instead of a page location
 		redirectOnClose: "details.html",
 		redirectOnCancel: "drive-apps.html",
+		showHeader: true,
 	},
 	// (Optional) Configure 'Run' view
 	run: {
@@ -192,6 +194,11 @@ version: "1.3.1",
             logoPadding: "1em",
 			textColor: "white",
         },
+		header: {
+			background: "white",
+			height: "30px",
+			textColor: "black",
+		},
         loginForm: {
             background: "white",
             padding: "1em",
