@@ -46,6 +46,7 @@ const SPECIFICATION_ACTIONS = document.getElementById("specification-actions")
 const SPECIFICATION_CANCEL_BUTTON = document.getElementById(
 	"specification-cancel-button",
 )
+const HEADER = document.querySelector("header")
 
 // Store Specification Id globally
 let rootSpecificationId
@@ -56,6 +57,7 @@ let currentConfig = config.project
 if (QUERY_DRIVE_APP_ALIAS) {
 	currentConfig = config.driveApp
 }
+const projectType = currentConfig === config.project ? "project" : "driveApp"
 
 /**
  * Start page functions.
@@ -1037,7 +1039,7 @@ document.addEventListener("click", (e) => {
 // to hide it we need to set root --header-height to 0
 // we can hide or show it by setting showHeader to true or false
 // we know if this is a project if we have a project name
-if((QUERY_PROJECT_NAME && !config.project.showHeader) || (QUERY_DRIVE_APP_ALIAS && !config.driveApp.showHeader)) {
+if((projectType === "project" && !config.project.showHeader) || (projectType === "driveApp" && !config.driveApp.showHeader)) {
 	document.querySelector("header").classList.add("hidden");
 }
 
