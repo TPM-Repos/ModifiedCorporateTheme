@@ -22,6 +22,17 @@ async function startPageFunctions() {
 		const projects = await client.getProjects(GROUP_ALIAS)
 		clearTimeout(loadingTimeout)
 
+		if (config.projects) {
+			// Remove hidden projects
+			if (config.projects.toHide) {
+				projects = projects.filter(project => !config.projects.toHide.includes(project.alias))
+			}
+
+			// Add custom projects
+			if (config.projects.toAdd) {
+				projects.push(...config.projects.toAdd)
+			}
+		}
 		// (Optional) Order Projects alphabetically by alias
 		const orderedProjects = sortProjectsByAlias(projects)
 
@@ -68,10 +79,9 @@ function renderProjects(projects) {
                     <div class="image" style="background-image: url('${imagePath}');"></div>
                 </div>
                 <h4 class="project-name">${name}</h4>
-                ${
-					description &&
-					'<div class="project-description">' + description + "</div>"
-				}
+                ${description &&
+			'<div class="project-description">' + description + "</div>"
+			}
                 <div class="project-action button">Create</div>
             </div>
         `
