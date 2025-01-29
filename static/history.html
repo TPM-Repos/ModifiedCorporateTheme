@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!-- Version 1.3.1 -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+		<title>History</title>
+
+		<!-- Scripts -->
+		<script src="dist/js/loadClient.js" defer></script>
+		<script src="configUser.js" defer onload="loadClient()"></script>
+		<script src="dist/js/sidebar.js" defer></script>
+		<script src="dist/js/ui.js" defer></script>
+		<script src="dist/js/core.js" defer></script>
+		<script src="dist/js/history.js" defer></script>
+
+		<!-- Core Styles -->
+		<link rel="stylesheet" type="text/css" href="dist/css/core.css" />
+
+		<!-- Theme Styles (customizable) -->
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/theme.css"
+		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/history.css"
+		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/fonts.css"
+		/>
+
+		<!-- Favicon -->
+		<link rel="icon" href="favicon.ico" />
+	</head>
+
+	<body class="template-history has-navigation is-loading">
+		<main class="content-wrap">
+			<aside class="content-nav">
+				<div class="logo-wrap">
+					<a href="projects.html" class="logo">
+						<img id="logo" />
+					</a>
+
+					<button id="nav-toggle" class="nav-toggle" title="Menu">
+						<svg class="icon">
+							<use xlink:href="dist/icons.svg#menu" />
+							<title>Menu</title>
+						</svg>
+					</button>
+				</div>
+
+				<nav id="nav-list">
+					<ul>
+						<li class="logout-list">
+							<button
+								type="button"
+								id="logout-nav"
+								class="logout-button button"
+							>
+								Log out
+							</button>
+						</li>
+					</ul>
+				</nav>
+
+				<div class="user-actions">
+					<div id="active-username" class="active-username">
+						<svg class="icon">
+							<use xlink:href="dist/icons.svg#user" />
+						</svg>
+						<span class="username"></span>
+					</div>
+					<a id="reset-password">Reset Password</a>
+					<button
+						type="button"
+						id="logout-button"
+						class="logout-button button"
+					>
+						Log out
+					</button>
+				</div>
+			</aside>
+
+			<section class="history-inner content-inner">
+				<div class="section-title">
+					<h1>History</h1>
+				</div>
+
+				<div class="history-controls">
+					<div class="inner">
+						<div id="history-filter" class="history-filter-name">
+							<svg class="search-icon icon">
+								<use xlink:href="dist/icons.svg#search" />
+							</svg>
+							<label for="name-filter-input" hidden
+								>Filter by Name</label
+							>
+							<input
+								type="text"
+								id="name-filter-input"
+								placeholder="Filter by name..."
+							/>
+							<svg class="loading-icon icon">
+								<use xlink:href="dist/icons.svg#loading-alt" />
+							</svg>
+						</div>
+
+						<div class="history-actions">
+							<button
+								id="date-order-toggle"
+								class="date-toggle"
+								title="Reverse Date Order"
+							>
+								<svg class="icon calendar">
+									<use xlink:href="dist/icons.svg#calendar" />
+								</svg>
+								<svg data-arrow class="icon arrow">
+									<use xlink:href="dist/icons.svg#arrow-up" />
+								</svg>
+								Date (<span>Newest First</span>)
+								<svg class="icon loading">
+									<use xlink:href="dist/icons.svg#loading" />
+								</svg>
+							</button>
+							<button
+								id="running-spec-toggle"
+								class="date-toggle"
+								title="Toggle Running Specification"
+							>
+								<svg data-arrow class="icon eye">
+									<use xlink:href="dist/icons.svg#eye-open" />
+								</svg>
+								<span>Show Running Specifications</span>
+								<svg class="icon loading">
+									<use xlink:href="dist/icons.svg#loading" />
+								</svg>
+							</button>
+
+							<button
+								id="expand-toggle"
+								class="expand-toggle"
+								title="Toggle Expanded View"
+							>
+								<span data-icon>
+									<svg class="icon">
+										<use
+											xlink:href="dist/icons.svg#expand"
+										/>
+									</svg>
+								</span>
+								<span data-text>Expand</span>
+							</button>
+
+							<button
+								id="filter-reset-button"
+								class="reset-button"
+							>
+								<svg class="icon">
+									<use xlink:href="dist/icons.svg#reset" />
+								</svg>
+								Reset
+								<svg class="icon loading">
+									<use xlink:href="dist/icons.svg#loading" />
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="history-headings">
+					<div class="inner">
+						<div>Name</div>
+						<div>Status</div>
+						<div>Last Edited</div>
+					</div>
+				</div>
+
+				<div id="history-list" class="history-list">
+					<div id="history-content" class="history-content"></div>
+
+					<div class="history-skeleton page-skeleton">
+						<div class="skeleton-block"></div>
+						<div class="skeleton-block"></div>
+						<div class="skeleton-block"></div>
+						<div class="skeleton-block"></div>
+					</div>
+				</div>
+			</section>
+
+			<button
+				type="button"
+				id="nav-close"
+				class="nav-overlay"
+				title="Close Menu"
+			>
+				Close Menu
+			</button>
+		</main>
+	</body>
+</html>
+

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!-- Version 1.3.1 -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+		<title>DriveApps</title>
+
+		<!-- Scripts -->
+		<script src="dist/js/loadClient.js" defer></script>
+		<script src="configUser.js" defer onload="loadClient()"></script>
+		<script src="dist/js/sidebar.js" defer></script>
+		<script src="dist/js/ui.js" defer></script>
+		<script src="dist/js/core.js" defer></script>
+		<script src="dist/js/drive-apps.js" defer></script>
+
+		<!-- Core Styles -->
+		<link rel="stylesheet" type="text/css" href="dist/css/core.css" />
+
+		<!-- Theme Styles (customizable) -->
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/theme.css"
+		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/drive-apps.css"
+		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="dist/css/theme/fonts.css"
+		/>
+
+		<!-- Favicon -->
+		<link rel="icon" href="favicon.ico" />
+	</head>
+
+	<body class="template-drive-apps has-navigation">
+		<main class="content-wrap">
+			<!-- Navigation -->
+			<aside class="content-nav">
+				<div class="logo-wrap">
+					<a href="projects.html" class="logo">
+						<img id="logo" />
+					</a>
+
+					<button id="nav-toggle" class="nav-toggle" title="Menu">
+						<svg class="icon">
+							<use xlink:href="dist/icons.svg#menu" />
+							<title>Menu</title>
+						</svg>
+					</button>
+				</div>
+
+				<nav id="nav-list">
+					<ul>
+						<li class="logout-list">
+							<button
+								type="button"
+								id="logout-nav"
+								class="logout-button button"
+							>
+								Log out
+							</button>
+						</li>
+					</ul>
+				</nav>
+
+				<div class="user-actions">
+					<div id="active-username" class="active-username">
+						<svg class="icon">
+							<use xlink:href="dist/icons.svg#user" />
+						</svg>
+						<span class="username"></span>
+					</div>
+					<a id="reset-password">Reset Password</a>
+					<button
+						type="button"
+						id="logout-button"
+						class="logout-button button"
+					>
+						Log out
+					</button>
+				</div>
+			</aside>
+
+			<section class="content-inner">
+				<div class="drive-app-inner">
+					<div class="section-title">
+						<h1>DriveApps</h1>
+					</div>
+
+					<div
+						id="drive-app-list"
+						class="drive-app-list"
+						style="opacity: 0"
+					>
+						<div class="drive-app-item skeleton-item">
+							<div class="skeleton-block"></div>
+						</div>
+						<div class="drive-app-item skeleton-item">
+							<div class="skeleton-block"></div>
+						</div>
+						<div class="drive-app-item skeleton-item">
+							<div class="skeleton-block"></div>
+						</div>
+						<div class="drive-app-item skeleton-item">
+							<div class="skeleton-block"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<button
+				type="button"
+				id="nav-close"
+				class="nav-overlay"
+				title="Close Menu"
+			>
+				Close Menu
+			</button>
+		</main>
+	</body>
+</html>
+
