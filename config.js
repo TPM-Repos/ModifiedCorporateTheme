@@ -1,8 +1,8 @@
 // COPY THIS FILE TO 'configUser.js' AND UPDATE THE VALUES TO MATCH YOUR SERVER URL & GROUP ALIAS
-// Version 1.3.1
+// Version 1.3.2
 
 const config = {
-version: "1.3.1",
+	version: "1.3.2",
 	// the full path the site running the DriveWorks Live API
 	// serverUrl: "https://dw21.api.yourdomain.com",
 	serverUrl: "",
@@ -11,11 +11,11 @@ version: "1.3.1",
 	groupAlias: "",
 	guestAlias: "",
 	// (Optional) Configure ping & update intervals - in seconds
-    // (Optional) Set Specification ping interval - in seconds
-    // A Specification will timeout after a configured period of inactivity (see DriveWorksConfigUser.xml).
-    // This function prevents a Specification timing out as long as the page is in view.
-    // Disable the ping by setting to 0
-    specificationPingInterval: 30,
+	// (Optional) Set Specification ping interval - in seconds
+	// A Specification will timeout after a configured period of inactivity (see DriveWorksConfigUser.xml).
+	// This function prevents a Specification timing out as long as the page is in view.
+	// Disable the ping by setting to 0
+	specificationPingInterval: 30,
 	// (Optional) Enter custom redirect URLs for login/logout and Project/DriveApp close/cancel
 	folder: "",
 	login: {
@@ -55,22 +55,22 @@ version: "1.3.1",
 	},
 	projects: {
 		// Hide specific projects by their group alias
-        toHide: [
+		toHide: [
 			{alias: "Group Alias"},
 		],
 		// add additional links to the projects page
-        toAdd: [
-            {
-                alias: "Group Alias",
-                description: "Optional description",
-                image: "dist/img/logo-dark.svg",
+		toAdd: [
+			{
+				alias: "Group Alias",
+				description: "Optional description",
+				image: "dist/img/logo-dark.svg",
 				// this could be an internal link like this
-                link: "run.html?project=Jib Cranes&DWMacroQuickLaunch=700Series",
+				link: "run.html?project=Jib Cranes&DWMacroQuickLaunch=700Series",
 				// or an external link like this
-                // link: "https://www.google.com",
-            },
-        ],
-    },
+				// link: "https://www.google.com",
+			},
+		],
+	},
 	// (Optional) Configure 'Details' view
 	details: {
 		updateInterval: 5, // Interval to refresh content - in seconds
@@ -94,13 +94,26 @@ version: "1.3.1",
 	// Add a watermark over pages in order to indicate that the site is a development site
 	// comment out or set to "" to disable
 	watermark: "Development",
+	// Banner configuration for site-wide messages
+	banner: {
+		enabled: false, // Toggle banner visibility
+		color: "", // Optional: override color (default uses styles.color.secondary)
+		message: "", // HTML allowed (e.g., links)
+		pages: [
+			"projects.html",
+			"history.html",
+			"details.html",
+			"drive-apps.html",
+			"run.html"
+		], // Pages to show banner on
+	},
 	// Set the title of the site, this will be displayed in the browser tab
 	// pageName | siteName
 	siteName: "TPM",
 	// Set whether a username or email address will be used
 	// username | email address
 	usernameType: "Username",
-    passwordRequired: false,
+	passwordRequired: false,
 	loginReturnUrls: true, // Toggle appending return urls to restore the previous location when redirected to the login form
 	locale: "en-US", // Set the default locale for displaying dates and numbers
 	dateFormat: {
@@ -124,8 +137,8 @@ version: "1.3.1",
 		// guestAlias: "Guest",
 		projectName: "AccountManagement",
 		// these three options can be true, false, or a string
-			// if a string is provided it will be the entire URL for example: "query?alias=development&run=AccountManagement&DWMacroNavigate=ResetPassword"
-			// only set the string if you are not using the TPM Account Management project
+		// if a string is provided it will be the entire URL for example: "query?alias=development&run=AccountManagement&DWMacroNavigate=ResetPassword"
+		// only set the string if you are not using the TPM Account Management project
 		createAccount: true,
 		forgotPassword: true,
 		resetPassword: true,
@@ -180,66 +193,66 @@ version: "1.3.1",
 	// Colors can be names, hexadecimal, rgb(a), hsl(a): for more info: https://www.w3schools.com/cssref/css_colors_legal.php
 	// line height can be px, pt, or unit-less. unit-less is * font size
 	styles: {
-        text: {
-            font: "Poppins",
-            size: "12pt",
-            color: "black",
-            lineHeight: "1.8",
-        },
-        heading: {
-            font: "Inter",
-            size: "48pt",
-            color: "black",
-            weight: "bold",
-            lineHeight: "1.2",
-        },
-        caption: {
-            font: "Roboto",
-            size: "12pt",
-            color: "black",
-            weight: "light",
-        },
-        color: {
-            primary: "#000000",
-            secondary: "#00AEEF",
-            background: "white",
-            icon: "#00AEEF",
-            focus: "#00AEEF",
-        },
-        sidebar: {
-            background: "#292929",
-            width: "18em",
-            logoPadding: "1em",
+		text: {
+			font: "Poppins",
+			size: "12pt",
+			color: "black",
+			lineHeight: "1.8",
+		},
+		heading: {
+			font: "Inter",
+			size: "48pt",
+			color: "black",
+			weight: "bold",
+			lineHeight: "1.2",
+		},
+		caption: {
+			font: "Roboto",
+			size: "12pt",
+			color: "black",
+			weight: "light",
+		},
+		color: {
+			primary: "#000000",
+			secondary: "#00AEEF",
+			background: "white",
+			icon: "#00AEEF",
+			focus: "#00AEEF",
+		},
+		sidebar: {
+			background: "#292929",
+			width: "18em",
+			logoPadding: "1em",
 			textColor: "white",
-        },
+		},
 		header: {
 			background: "white",
 			height: "30px",
 			textColor: "black",
 		},
-        loginForm: {
-            background: "white",
-            padding: "1em",
+		loginForm: {
+			background: "white",
+			padding: "1em",
 			textColor: "black",
-        },
-        button: {
+		},
+		button: {
 			// not recommended to use %
-            radius: "2rem",
-            color: "#00AEEF",
+			radius: "2rem",
+			color: "#00AEEF",
 			textColor: "white",
 			colorHover: "rgb(36, 58, 118)",
 			textColorHover: "white",
 			border: "none",
-        },
-        logo: {
-            width: "50%"
-        },
-        projectCard: {
-            background: "#efeeed",
-            margin: "22px",
-        },
+		},
+		logo: {
+			width: "50%"
+		},
+		projectCard: {
+			background: "#efeeed",
+			margin: "22px",
+		},
 		// not recommended to use %
-        inputRadius: "10pt",
-    },
+		inputRadius: "10pt",
+	},
 }
 

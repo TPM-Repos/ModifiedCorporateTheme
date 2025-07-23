@@ -206,6 +206,32 @@ This document provides detailed information about all available configuration op
 }
 ```
 
+## Banner Configuration
+
+```javascript
+{
+  banner: {
+    enabled: false, // Toggle banner visibility
+    color: "", // Optional: override color (default uses styles.color.secondary)
+    message: "<strong>Price Increase:</strong> Our prices will increase on May 1. <a href='price-increase.pdf' target='_blank'>Learn more</a>", // HTML allowed
+    pages: [
+      "projects.html",
+      "history.html",
+      "details.html",
+      "drive-apps.html",
+      "run.html"
+    ] // Pages to show banner on
+  }
+}
+```
+
+- `enabled`: Show/hide the banner (default: false)
+- `color`: Banner background color (default: theme secondary color)
+- `message`: Banner content (HTML allowed, e.g., links)
+- `pages`: Array of page filenames to display the banner (default: all main pages except login)
+
+The banner will appear at the top of the specified pages when enabled. Use HTML in the message for links or formatting.
+
 ## Development
 
 ### Debug Options
