@@ -94,6 +94,19 @@ version: "1.3.1",
 	// Add a watermark over pages in order to indicate that the site is a development site
 	// comment out or set to "" to disable
 	watermark: "Development",
+	// Banner configuration for site-wide messages
+	banner: {
+		enabled: false, // Toggle banner visibility
+		color: "", // Optional: override color (default uses styles.color.secondary)
+		message: "", // HTML allowed (e.g., links)
+		pages: [
+			"projects.html",
+			"history.html",
+			"details.html",
+			"drive-apps.html",
+			"run.html"
+		], // Pages to show banner on
+	},
 	// Set the title of the site, this will be displayed in the browser tab
 	// pageName | siteName
 	siteName: "TPM",
