@@ -100,6 +100,30 @@ For needs beyond configuration options:
 4. Pull updates from the main repository as needed
 
 
+## Deploying Updates (Cache Busting)
+
+After making changes to any JS, CSS, or configuration files, run the deploy script to ensure customers receive the latest files instead of stale cached versions.
+
+### Usage
+
+Open PowerShell, navigate to the website root, and run:
+
+```powershell
+cd "\\dwlive\DWGroupContent\Templates\Websites\TPMTemplates22DEV"
+.\deploy.ps1              # Auto-increments patch version (e.g. 1.3.1 → 1.3.2)
+.\deploy.ps1 -version "2.0.0"   # Or set a specific version
+```
+
+### What it does
+
+1. Bumps `config.version` in `configUser.js`
+2. Updates the `?v=` query string on all `<script>` and `<link>` tags across every HTML file
+3. Browsers treat the new URLs as entirely new files, bypassing any cached versions
+
+### When to run it
+
+Run `deploy.ps1` any time you modify files in `dist/js/`, `dist/css/`, or `configUser.js` and want customers to immediately receive the updates. You do not need to run it for HTML-only changes since HTML files are not cached the same way.
+
 ## Reporting Issues
 
 1. Check existing issues to avoid duplicates

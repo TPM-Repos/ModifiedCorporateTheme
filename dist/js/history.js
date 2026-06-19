@@ -22,7 +22,8 @@ const resetButton = document.getElementById("filter-reset-button")
 
 let filterDateOrder =
 	localStorage.getItem(storageKeyDateOrder) ?? defaultDateOrder
-	let runningSpecVisibility = localStorage.getItem(storageKeyRunningSpecVisibility) ?? defaultRunningSpecVisibility
+let storedRunningSpecVisibility = localStorage.getItem(storageKeyRunningSpecVisibility)
+let runningSpecVisibility = storedRunningSpecVisibility !== null ? storedRunningSpecVisibility === "true" : defaultRunningSpecVisibility
 let isLoadingHistory = false
 let blockLazyLoading = false
 let expandedView = false
@@ -96,7 +97,7 @@ function getStoredQuery(top, skip) {
 	// Get name filter
 	const filterName = localStorage.getItem(storageKeyName)
 	if (filterName) {
-		query += `and contains(tolower(name), tolower('${filterName}'))`
+		query += ` and contains(tolower(name), tolower('${escapeStringForOData(filterName)}'))`
 		nameFilterInput.value = filterName
 	}
 
@@ -150,6 +151,8 @@ async function getSpecificationsWithQuery(
 		renderSpecifications(specifications, clearList)
 	} catch (error) {
 		handleGenericError(error)
+	} finally {
+		isLoadingHistory = false
 	}
 }
 
@@ -204,7 +207,7 @@ function generateHistoryItem(specification, index) {
         <a href="details.html?specification=${
 			specification.id
 		}" class="item-details">
-            <h3 class="item-name">${specification.name}</h3>
+            <h3 class="item-name">${escapeHtml(specification.name)}</h3>
             ${
 				status &&
 				`<div class="status"><div class="status-tag status-${normalizeString(
@@ -321,9 +324,13 @@ async function filterSpecificationsByName(name) {
 			localStorage.getItem(storageKeyDateOrder) ?? defaultDateOrder
 
 		// Create OData filter (contains name)
-		const query = `$filter=contains(tolower(name), tolower('${escapeStringForOData(
+		let query = `$filter=contains(tolower(name), tolower('${escapeStringForOData(
 			name,
-		)}')) and StateType ne 'Running'&$orderby=DateEdited ${currentDateOrder}&$top=${defaultLimit}`
+		)}'))`
+		if (!runningSpecVisibility) {
+			query += ` and StateType ne 'Running'`
+		}
+		query += `&$orderby=DateEdited ${currentDateOrder}&$top=${defaultLimit}`
 
 		// Reset stage
 		resetFilterPosition()
@@ -373,11 +380,17 @@ dateOrderToggle.onclick = () => {
 	let query =
 		"$orderby=DateEdited " + filterDateOrder + "&$top=" + defaultLimit
 
-	// Filter with name (if set)
+	// Build filter parts
+	const filterParts = []
+	if (!runningSpecVisibility) {
+		filterParts.push("StateType ne 'Running'")
+	}
 	const filterName = localStorage.getItem(storageKeyName)
 	if (filterName) {
-		query +=
-			"&$filter=startswith(tolower(name), tolower('" + filterName + "'))"
+		filterParts.push("contains(tolower(name), tolower('" + escapeStringForOData(filterName) + "'))")
+	}
+	if (filterParts.length > 0) {
+		query += "&$filter=" + filterParts.join(" and ")
 	}
 
 	// Reset stage
@@ -530,6 +543,7 @@ function getNextPaginationChunk() {
 
 	// Get stored position (results previously shown)
 	const storedPosition = localStorage.getItem(storageKeyPosition)
+	let newPosition
 	if (storedPosition) {
 		newPosition = parseFloat(storedPosition)
 	} else {
@@ -567,11 +581,6 @@ function addLoadingState() {
  * Clear any loading state.
  */
 function clearLoadingState() {
-	// Reset loading state (delay to stop potential overlap)
-	setTimeout(() => {
-		isLoadingHistory = false
-	}, 250)
-
 	// Remove inline loading indicators (lazy-load)
 	document.querySelectorAll(".history-loading").forEach((e) => e.remove())
 }
@@ -634,7 +643,7 @@ function hideEmptyResults() {
  */
 function resetFilterPosition() {
 	localStorage.removeItem(storageKeyPosition)
-	allowLoad = true
+	blockLazyLoading = false
 }
 
 /**
@@ -643,7 +652,7 @@ function resetFilterPosition() {
  * @param {string} string - The string to escape.
  */
 function escapeStringForOData(string) {
-	return (cleanString = encodeURIComponent(string.replaceAll(/'/g, "''")))
+	return encodeURIComponent(string.replaceAll(/'/g, "''"))
 }
 
 /**

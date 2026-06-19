@@ -141,12 +141,10 @@ async function constructDetails() {
 		renderDetails(specification)
 
 		// Get attached data
-		getActions()
-		getProperties()
-		getDocuments()
+		await Promise.all([getActions(), getProperties(), getDocuments()])
 
 		// Update data after brief timeout (repeat indefinitely)
-		setTimeout(function () {
+		refreshTimeout = setTimeout(function () {
 			constructDetails()
 		}, DETAILS_UPDATE_INTERVAL)
 
@@ -227,7 +225,7 @@ async function appendNewSpecificationAction(originalProjectName) {
 	const matchingProjectCount = (
 		await client.getProjects(
 			GROUP_ALIAS,
-			`$filter=name eq '${originalProjectName}'`,
+			`$filter=name eq '${originalProjectName.replaceAll(/'/g, "''")}'`,
 		)
 	).length
 	if (matchingProjectCount === 0) {
@@ -241,7 +239,7 @@ async function appendNewSpecificationAction(originalProjectName) {
         <span>New</span>
     `
 	action.classList = "new-button button"
-	action.href = `run.html?project=${originalProjectName}`
+	action.href = `run.html?project=${encodeURIComponent(originalProjectName)}`
 	action.title = "Start new Specification"
 	detailHeader.appendChild(action)
 }
@@ -556,7 +554,7 @@ function renderDocuments(documents) {
 	documentsList.innerHTML = ""
 
 	// Loop over Documents
-	for (item of documents) {
+	for (const item of documents) {
 		// Skip if hidden
 		if (item.isHidden) {
 			continue
@@ -729,9 +727,7 @@ function renderDocument(file) {
         <div class="document-details">
             <div class="document-name">${displayName}</div>
             <div class="document-created">
-                Created: ${new Date(dateCreated).toLocaleString("en-GB", {
-					minimumFractionDigits: 2,
-				})}
+                Created: ${localizedDateTimeString(dateCreated)}
                 <span class="extension">[${extension}]</span>
             </div>
         </div>
