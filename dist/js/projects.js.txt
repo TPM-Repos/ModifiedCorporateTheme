@@ -1,0 +1,160 @@
+// Version 1.3.5
+/**
+ * PROJECTS
+ */
+
+// Custom project order
+// Edit this array to change the order in which projects appear on the projects page.
+// Projects listed here will appear first, followed by all other available projects.
+// If a project name doesn't exist, a console warning will be logged.
+const PROJECT_CUSTOM_ORDER = [
+	"Screw Conveyor",
+	"Belt Conveyor",
+	"Nozzle Mix",
+	"Heat Exchanger/Sludge Heater",
+	"Storage System Hopper",
+	"Rotary Drum Screen",
+	"Rotary Drum Thickener",
+	"Other Products",
+	"JobScope Integration",
+	"Salesforce Integration",
+]
+
+const CREDENTIALS = config.credentials
+const projectsList = document.getElementById("project-list")
+
+/**
+ * Start page functions.
+ */
+async function startPageFunctions() {
+	// After short delay, show loading state (skip loading state entirely if very quick loading)
+	const loadingTimeout = setTimeout(() => {
+		projectsList.style.opacity = ""
+	}, 1000)
+
+	try {
+		setCustomClientErrorHandler()
+
+		// Get Projects
+		const projects = await client.getProjects(GROUP_ALIAS)
+		clearTimeout(loadingTimeout)
+
+		if (config.projects) {
+			// Remove hidden projects
+			if (config.projects.toHide) {
+				projects = projects.filter(project => !config.projects.toHide.includes(project.alias))
+			}
+
+			// Add custom projects
+			if (config.projects.toAdd) {
+				projects.push(...config.projects.toAdd)
+			}
+		}
+		// (Optional) Order Projects alphabetically by alias
+		const orderedProjects = sortProjectsByAlias(projects)
+
+		// Render Projects
+		renderProjects(orderedProjects)
+	} catch (error) {
+		handleGenericError(error)
+	}
+}
+
+/**
+ * Render Projects to container.
+ *
+ * @param {Object} projects - ProjectData object.
+ */
+function renderProjects(projects) {
+	// Clear loading state, show list
+	projectsList.innerHTML = ""
+	projectsList.style.opacity = ""
+
+	// Empty state
+	if (!projects || !projects.length) {
+		projectsList.innerHTML = `
+            <div class="empty-projects">
+                <p>No Projects available.</p>
+            </div>
+        `
+		return
+	}
+
+	// Loop out Projects
+	for (let index = 0; index < projects.length; index++) {
+		const project = projects[index]
+		const name = project.alias || project.name
+		const description = project.description
+		let imagePath = project.absoluteImagePath
+		if (!imagePath) {
+			imagePath = "dist/img/placeholder.png"
+		}
+
+		const markup = `
+            <div class="inner">
+                <div class="project-image">
+                    <div class="image" style="background-image: url('${imagePath}');"></div>
+                </div>
+                <h4 class="project-name">${name}</h4>
+                ${description &&
+			'<div class="project-description">' + description + "</div>"
+			}
+                <div class="project-action button">Create</div>
+            </div>
+        `
+
+		// Create Project item
+		const item = document.createElement("a")
+		item.classList.add("project-item")
+		item.style.setProperty("--index", index)
+		item.setAttribute("data-id", project.id)
+		item.setAttribute("data-name", project.name)
+		item.href = `run.html?project=${project.name}`
+		item.title = "Create Specification: " + name
+		item.innerHTML = markup
+
+		projectsList.appendChild(item)
+
+		// Animate entrance (hidden by default)
+		item.classList.add("animate")
+	}
+}
+
+/**
+ * Order Projects by custom hardcoded order - using name if unavailable.
+ * Loads projects from custom order first, then remaining projects.
+ * @param {Object} projects - The unsorted Projects to order.
+ */
+function sortProjectsByAlias(projects) {
+	// Create a map of project names to projects for quick lookup
+	const projectMap = new Map()
+	projects.forEach(project => {
+		const name = project.alias || project.name
+		projectMap.set(name, project)
+	})
+	
+	// Build ordered array: first load projects from custom order
+	const orderedProjects = []
+	const foundNames = new Set()
+	
+	PROJECT_CUSTOM_ORDER.forEach(orderName => {
+		const project = projectMap.get(orderName)
+		if (project) {
+			orderedProjects.push(project)
+			foundNames.add(orderName)
+		} else {
+			// Log console warning if project in custom order doesn't exist
+			console.warn(`[Projects] Project "${orderName}" specified in custom order but not found in available projects.`)
+		}
+	})
+	
+	// Add remaining projects that weren't in the custom order
+	projects.forEach(project => {
+		const name = project.alias || project.name
+		if (!foundNames.has(name)) {
+			orderedProjects.push(project)
+		}
+	})
+	
+	return orderedProjects
+}

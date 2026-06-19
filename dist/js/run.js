@@ -775,7 +775,7 @@ function redirectOnSpecAction(action = "close") {
 	if (page === "logout") {
 		handleLogout()
 	} else {
-		window.location.href = `${page}?specification=${rootSpecificationId}`
+		window.location.href = page.includes("?") ? page : `${page}?specification=${rootSpecificationId}`
 	}
 }
 

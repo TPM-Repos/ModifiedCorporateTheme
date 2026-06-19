@@ -11,8 +11,8 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 
 // Account Management
 const AM_GUEST_ALIAS = config.accountManagement?.guestAlias || config.guestAlias
-const AM_PROJECT_NAME = config.accountManagement?.projectName || "AccountManagement"
-const AM_QUERY_STRING = `query?alias=${AM_GUEST_ALIAS}&run=${AM_PROJECT_NAME}&DWMacroNavigate=`
+const AM_PROJECT_NAME = config.accountManagement?.projectName || "TPMTempAccountManagement"
+const AM_QUERY_STRING = `query?alias=${AM_GUEST_ALIAS}&run=${AM_PROJECT_NAME}&DWMacroNavRequestInputs=`
 const CREATE_ACCOUNT_URL = AM_QUERY_STRING + (typeof config.accountManagement?.createAccount === 'string' ? config.accountManagement.createAccount : "CreateAccount");
 const FORGOT_PASSWORD_URL = AM_QUERY_STRING + (typeof config.accountManagement?.forgotPassword === 'string' ? config.accountManagement.forgotPassword : "ForgotPassword");
 const RESET_PASSWORD_URL = AM_QUERY_STRING + (typeof config.accountManagement?.resetPassword === 'string' ? config.accountManagement.resetPassword : "ResetPassword");
@@ -46,9 +46,9 @@ let currentIndex = 0;
 // DriveWorks Live Client
 let client;
 
-	/**
-	 * On page load.
-	 */
+/**
+ * On page load.
+ */
 (async function () {
 	// Check localStorage support (show warning if not e.g. <= iOS 10 Private Window)
 	if (!localStorageSupported()) {
@@ -130,7 +130,7 @@ async function dwClientLoaded() {
 		await forceLogout()
 	}
 
-	if(client == null) {
+	if (client == null) {
 		dwClientLoadError()
 	} else {
 		startPageFunctions()
@@ -181,7 +181,7 @@ async function login(type) {
 		} else if (type === "SSO") {
 			result = await client.loginSSO(GROUP_ALIAS)
 		} else if (type === "Guest") {
-				GROUP_ALIAS = config.guestAlias
+			GROUP_ALIAS = config.guestAlias
 			inputUsername = "Guest"
 
 			result = await client.loginGroup(GROUP_ALIAS)
@@ -252,9 +252,9 @@ function loginSuccess(result, username) {
 		)}`
 		return
 	}
-	
+
 	if (config.login.redirectGuestUrl && config.guestLogin.enabled && config.guestLogin.alias) {
-		LOGIN_REDIRECT_URL = (GROUP_ALIAS === config.guestLogin.alias)? config.login.redirectGuestUrl : config.login.redirectUrl
+		LOGIN_REDIRECT_URL = (GROUP_ALIAS === config.guestLogin.alias) ? config.login.redirectGuestUrl : config.login.redirectUrl
 	}
 
 	// Redirect to default location
@@ -357,7 +357,7 @@ async function checkExistingLogin() {
 	}
 
 	if (config.login.redirectGuestUrl && config.guestLogin.enabled && config.guestLogin.alias) {
-		LOGIN_REDIRECT_URL = (storedGroupAlias === config.guestLogin.alias)? config.login.redirectGuestUrl : config.login.redirectUrl
+		LOGIN_REDIRECT_URL = (storedGroupAlias === config.guestLogin.alias) ? config.login.redirectGuestUrl : config.login.redirectUrl
 	}
 
 	try {
@@ -474,7 +474,7 @@ function addCarouselImages() {
 	config.images.carousel.images.forEach((image, index) => {
 		const imageElement = document.createElement("img");
 		imageElement.src = image;
-		imageElement.id = `cover-image-${index+1}`;
+		imageElement.id = `cover-image-${index + 1}`;
 		imageElement.loading = "lazy";
 		imageElement.classList.add("login-cover");
 		imageElements.push(imageElement);
@@ -529,7 +529,7 @@ function setCopyright() {
 }
 
 function setUsernameType() {
-	if(!config.usernameType || !usernameInput || !usernameLabel)
+	if (!config.usernameType || !usernameInput || !usernameLabel)
 		return
 
 	let type = config.usernameType
