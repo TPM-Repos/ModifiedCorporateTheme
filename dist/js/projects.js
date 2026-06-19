@@ -3,26 +3,7 @@
  * PROJECTS
  */
 
-<<<<<<< Updated upstream
-// Custom project order
-// Edit this array to change the order in which projects appear on the projects page.
-// Projects listed here will appear first, followed by all other available projects.
-// If a project name doesn't exist, a console warning will be logged.
-const PROJECT_CUSTOM_ORDER = [
-	"Screw Conveyor",
-	"Belt Conveyor",
-	"Nozzle Mix",
-	"Heat Exchanger/Sludge Heater",
-	"Storage System Hopper",
-	"Rotary Drum Screen",
-	"Rotary Drum Thickener",
-	"Other Products",
-	"JobScope Integration",
-	"Salesforce Integration",
-]
-=======
 const PROJECT_CUSTOM_ORDER = config.projects?.customOrder || []
->>>>>>> Stashed changes
 
 const CREDENTIALS = config.credentials
 const projectsList = document.getElementById("project-list")
