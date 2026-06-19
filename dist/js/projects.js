@@ -3,6 +3,7 @@
  * PROJECTS
  */
 
+<<<<<<< Updated upstream
 // Custom project order
 // Edit this array to change the order in which projects appear on the projects page.
 // Projects listed here will appear first, followed by all other available projects.
@@ -19,6 +20,9 @@ const PROJECT_CUSTOM_ORDER = [
 	"JobScope Integration",
 	"Salesforce Integration",
 ]
+=======
+const PROJECT_CUSTOM_ORDER = config.projects?.customOrder || []
+>>>>>>> Stashed changes
 
 const CREDENTIALS = config.credentials
 const projectsList = document.getElementById("project-list")
@@ -36,13 +40,13 @@ async function startPageFunctions() {
 		setCustomClientErrorHandler()
 
 		// Get Projects
-		const projects = await client.getProjects(GROUP_ALIAS)
+		let projects = await client.getProjects(GROUP_ALIAS)
 		clearTimeout(loadingTimeout)
 
 		if (config.projects) {
 			// Remove hidden projects
 			if (config.projects.toHide) {
-				projects = projects.filter(project => !config.projects.toHide.includes(project.alias))
+				projects = projects.filter(project => !config.projects.toHide.includes(project.alias) && !config.projects.toHide.includes(project.name))
 			}
 
 			// Add custom projects
@@ -95,7 +99,7 @@ function renderProjects(projects) {
                 <div class="project-image">
                     <div class="image" style="background-image: url('${imagePath}');"></div>
                 </div>
-                <h4 class="project-name">${name}</h4>
+                <h4 class="project-name">${escapeHtml(name)}</h4>
                 ${description &&
 			'<div class="project-description">' + description + "</div>"
 			}
@@ -109,7 +113,7 @@ function renderProjects(projects) {
 		item.style.setProperty("--index", index)
 		item.setAttribute("data-id", project.id)
 		item.setAttribute("data-name", project.name)
-		item.href = `run.html?project=${project.name}`
+		item.href = `run.html?project=${encodeURIComponent(project.name)}`
 		item.title = "Create Specification: " + name
 		item.innerHTML = markup
 

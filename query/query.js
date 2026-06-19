@@ -525,14 +525,14 @@ async function handleLogout() {
  * @param {boolean} [addReturnUrl] - Append return URL to redirected location.
  */
 function redirectToLogin(notice, state = "error", addReturnUrl = false) {
-	// Clear any invalid details that may have been stored
-	localStorage.clear()
+	// Clear session data
+	clearSessionData()
 
 	// Set login notice
 	if (notice) {
-		this.setLoginNotice(notice, state)
+		setLoginNotice(notice, state)
 	} else {
-		this.setLoginNotice("Login to access that.", "error")
+		setLoginNotice("Login to access that.", "error")
 	}
 
 	let logoutQuery = "source=query"
@@ -546,10 +546,10 @@ function redirectToLogin(notice, state = "error", addReturnUrl = false) {
 				window.location.search,
 			)}`
 		}
-
-		// Redirect to login screen, with query value.
-		window.location.href = `../index.html?${logoutQuery}`
 	}
+
+	// Redirect to login screen
+	window.location.href = `../index.html?${logoutQuery}`
 }
 
 /**

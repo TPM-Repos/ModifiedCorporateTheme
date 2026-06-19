@@ -10,10 +10,10 @@ const CURRENT_SESSION = localStorage.getItem("sessionId")
 // Account Management
 const AM_GUEST_ALIAS = config.accountManagement?.guestAlias || config.guestAlias
 const AM_PROJECT_NAME = config.accountManagement?.projectName || "AccountManagement"
-const AM_QUERY_STRING = `query?alias=${AM_GUEST_ALIAS}&run=${AM_PROJECT_NAME}&DWMacroNavigate=`
+const AM_QUERY_STRING = `query?alias=${AM_GUEST_ALIAS}&run=${AM_PROJECT_NAME}&DWMacroNavRequestInputs=`
 const CREATE_ACCOUNT_URL = AM_QUERY_STRING + (typeof config.accountManagement?.createAccount === 'string' ? config.accountManagement.createAccount : "CreateAccount");
 const FORGOT_PASSWORD_URL = AM_QUERY_STRING + (typeof config.accountManagement?.forgotPassword === 'string' ? config.accountManagement.forgotPassword : "ForgotPassword");
-const RESET_PASSWORD_URL = `run.html?project=${AM_PROJECT_NAME}&DWMacroNavigate=` + (typeof config.accountManagement?.resetPassword === 'string' ? config.accountManagement.resetPassword : "ResetPassword");
+const RESET_PASSWORD_URL = `run.html?project=${AM_PROJECT_NAME}&DWMacroNavRequestInputs=` + (typeof config.accountManagement?.resetPassword === 'string' ? config.accountManagement.resetPassword : "ResetPassword");
 
 // Elements
 const passwordResetLink = document.getElementById("reset-password")
@@ -107,8 +107,14 @@ function setLoginNotice(text, state = "info") {
  * @param {boolean} [noReturnUrl] - Optionally disable return url
  */
 function redirectToLogin(notice, state, noReturnUrl) {
-	// Clear Session from storage
-	localStorage.clear()
+	// Clear Session and history filters from storage
+	localStorage.removeItem("sessionId")
+	localStorage.removeItem("sessionAlias")
+	localStorage.removeItem("sessionUsername")
+	localStorage.removeItem("historyFilterName")
+	localStorage.removeItem("historyDateOrder")
+	localStorage.removeItem("historyRunningSpecVisibility")
+	localStorage.removeItem("historyPosition")
 
 	// Store login screen message
 	if (notice && state) {
@@ -148,8 +154,14 @@ function attachLogoutActions() {
  * Redirect on logout.
  */
 function logoutRedirect() {
-	// Clear Session from storage
-	localStorage.clear()
+	// Clear Session and history filters from storage
+	localStorage.removeItem("sessionId")
+	localStorage.removeItem("sessionAlias")
+	localStorage.removeItem("sessionUsername")
+	localStorage.removeItem("historyFilterName")
+	localStorage.removeItem("historyDateOrder")
+	localStorage.removeItem("historyRunningSpecVisibility")
+	localStorage.removeItem("historyPosition")
 
 	// Redirect
 	window.location.replace(config.logout.redirectUrl)
@@ -253,7 +265,7 @@ function showUsername() {
 	}
 
 	usernameOutput.classList.add("is-shown")
-	document.querySelector("#active-username .username").innerHTML = username
+	document.querySelector("#active-username .username").textContent = username
 
 	adjustFontSize()
 }
@@ -290,7 +302,7 @@ function detectTouchDevice() {
 /**
  * Get local Session Id from storage - between pages.
  */
-getLocalSession = () => localStorage.getItem("sessionId")
+const getLocalSession = () => localStorage.getItem("sessionId")
 
 /**
  * Handle generic error.
@@ -299,6 +311,16 @@ getLocalSession = () => localStorage.getItem("sessionId")
  */
 function handleGenericError(error) {
 	console.log(error)
+}
+
+/**
+ * Escape a string for safe insertion into HTML.
+ * @param {string} str
+ * @return {string}
+ */
+function escapeHtml(str) {
+	if (!str) return ""
+	return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;")
 }
 
 /**

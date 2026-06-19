@@ -518,7 +518,7 @@ button.nav-overlay:focus {
 }
 
 .watermark {
-	position: absolute;
+	position: fixed;
 	bottom: 8%;
 	left: 0;
 	right: 0;

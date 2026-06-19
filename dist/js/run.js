@@ -51,6 +51,7 @@ const HEADER = document.querySelector("header")
 // Store Specification Id globally
 let rootSpecificationId
 let activeSpecificationId
+let isRenderingActions = false
 
 // Detect current config type based on query values
 let currentConfig = config.project
@@ -492,34 +493,41 @@ function registerFormButtons(specification) {
  * Render Specification Actions (Operations & Transitions).
  */
 async function renderSpecificationActions() {
-	// Get enabled Actions
-	const actions = await client.getSpecificationActions(
-		GROUP_ALIAS,
-		activeSpecificationId,
-	)
+	if (isRenderingActions) return
+	isRenderingActions = true
 
-	// Clear out old Actions
-	SPECIFICATION_ACTIONS.innerHTML = ""
+	try {
+		// Get enabled Actions
+		const actions = await client.getSpecificationActions(
+			GROUP_ALIAS,
+			activeSpecificationId,
+		)
 
-	for (const action of actions) {
-		const name = action.name
-		const title = action.title
-		const type = action.type
+		// Clear out old Actions
+		SPECIFICATION_ACTIONS.innerHTML = ""
 
-		// Create button
-		const button = document.createElement("button")
-		button.classList.add("action-button")
-		button.innerHTML = title
+		for (const action of actions) {
+			const name = action.name
+			const title = action.title
+			const type = action.type
 
-		// Check type
-		if (type === "Operation") {
-			renderOperationAction(name, button)
-		} else {
-			renderTransitionAction(name, button)
+			// Create button
+			const button = document.createElement("button")
+			button.classList.add("action-button")
+			button.innerHTML = title
+
+			// Check type
+			if (type === "Operation") {
+				renderOperationAction(name, button)
+			} else {
+				renderTransitionAction(name, button)
+			}
 		}
-	}
 
-	document.body.classList.add("actions-shown")
+		document.body.classList.add("actions-shown")
+	} finally {
+		isRenderingActions = false
+	}
 }
 
 /**
@@ -763,6 +771,7 @@ function existingSpecificationCancelled() {
  * If cancel, redirect to config.redirectOnCancel
  */
 function redirectOnSpecAction(action = "close") {
+	let page
 	if (
 		isGuest() || isResetPassword()
 	) {
@@ -784,7 +793,7 @@ function redirectOnSpecAction(action = "close") {
  * @returns {boolean}
  */
 function isResetPassword() {
-	return ( URL_QUERY.get("DWMacroNavigate") === "ResetPassword" )
+	return ( URL_QUERY.get("DWMacroNavRequestInputs") === "ResetPassword" || URL_QUERY.get("DWMacroNavigate") === "ResetPassword" )
 }
 
 /**
@@ -992,10 +1001,14 @@ function showConfirmationDialog(confirmAction, message = "Are you sure?") {
  * Attach logout actions to macro buttons
  */
 function attachLogoutButtons() {
-	const form_dom = document.querySelector("dw-form").shadowRoot
+	const dwForm = document.querySelector("dw-form")
+	if (!dwForm || !dwForm.shadowRoot) {
+		return
+	}
+
+	const form_dom = dwForm.shadowRoot
 	const logoutButtons = form_dom.querySelectorAll("[data-metadata*='logout']")
-	if (!logoutButtons) {
-		console.log("no buttons found")
+	if (!logoutButtons || logoutButtons.length === 0) {
 		return
 	}
 

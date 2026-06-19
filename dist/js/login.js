@@ -38,7 +38,7 @@ const genericErrorMessage = "Unable to login."
 const clientErrorMessage = "Cannot access client."
 const privateErrorMessage = "Please use a non-private window."
 
-// Gloabl variables
+// Global variables
 let interval;
 let imageElements = [];
 let currentIndex = 0;
@@ -383,7 +383,13 @@ async function forceLogout() {
 	}
 
 	// Clear session information from storage.
-	localStorage.clear()
+	localStorage.removeItem("sessionId")
+	localStorage.removeItem("sessionAlias")
+	localStorage.removeItem("sessionUsername")
+	localStorage.removeItem("historyFilterName")
+	localStorage.removeItem("historyDateOrder")
+	localStorage.removeItem("historyRunningSpecVisibility")
+	localStorage.removeItem("historyPosition")
 
 	// Show login screen message.
 	setLoginNotice("You have been logged out.", "success")
