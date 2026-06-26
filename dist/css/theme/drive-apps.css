@@ -50,7 +50,7 @@
 	align-items: center;
 	justify-content: space-between;
 	height: 100%;
-	background-color: #fff;
+	background-color: var(--card-background, #fff);
 	padding: 1.5em;
 	border: 2px solid transparent;
 	border-radius: var(--inputRadius);

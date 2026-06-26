@@ -253,6 +253,25 @@ const config = {
 		},
 		// not recommended to use %
 		inputRadius: "10pt",
+		// Card/item surfaces (history items, detail panels, document items, drive-app cards)
+		card: {
+			background: "#fff",
+			textColor: "#000",
+		},
+		// Sticky header bar that appears when scrolling on history/details pages
+		stickyHeader: {
+			background: "#fff",
+			backgroundBlur: "rgba(255, 255, 255, 0.9)",
+		},
+	},
+	// (Optional) Override page headings.
+	// If a key is not set, the heading falls back to the matching sidebarLinks[].title for that page.
+	// The login page has no sidebar link, so set it here directly.
+	pageLabels: {
+		// projects: "Projects",
+		// history: "History",
+		// driveApps: "DriveApps",
+		login: "Login to configure",
 	},
 }
 
