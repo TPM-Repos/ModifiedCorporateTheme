@@ -67,7 +67,7 @@ button:disabled,
 .page-title .button {
 	align-items: center;
 	background-color: rgba(0, 0, 0, 0.05);
-	color: #000;
+	color: var(--card-textColor, #000);
 	padding: 0.5em 0.75em;
 	margin-right: 1em;
 	text-decoration: none;
@@ -146,7 +146,7 @@ button.action-transition {
 }
 
 .summary-content {
-	background-color: #fff;
+	background-color: var(--card-background, #fff);
 	padding: 0.5em 1.5em;
 	border-radius: var(--inputRadius);
 	box-shadow: var(--shadow-light);
@@ -185,7 +185,7 @@ button.action-transition {
 
 /* Properties */
 .detail-properties .properties-content {
-	background-color: #fff;
+	background-color: var(--card-background, #fff);
 	padding: 0.5em 1.5em;
 	border-radius: var(--inputRadius);
 	box-shadow: var(--shadow-light);
@@ -322,7 +322,7 @@ button.action-transition {
 	position: relative;
 	display: flex;
 	align-items: center;
-	background-color: #fff;
+	background-color: var(--card-background, #fff);
 	border-radius: var(--inputRadius);
 	box-shadow: var(--shadow-light);
 	margin-bottom: 0.5em;
@@ -520,7 +520,7 @@ button.action-transition {
 	}
 	.page-title.is-stuck {
 		box-shadow: var(--shadow-light);
-		background-color: #fff;
+		background-color: var(--stickyHeader-background, #fff);
 	}
 	.page-title .inner {
 		padding: 1.5em 2em;
@@ -531,7 +531,7 @@ button.action-transition {
 
 	@supports (backdrop-filter: blur) {
 		.page-title.is-stuck {
-			background-color: rgba(255, 255, 255, 0.9);
+			background-color: var(--stickyHeader-backgroundBlur, rgba(255, 255, 255, 0.9));
 		}
 	}
 }

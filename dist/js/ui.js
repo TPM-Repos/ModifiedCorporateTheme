@@ -21,6 +21,7 @@ const rs = document.querySelector(":root").style
 	setLogo()
 	setWatermark()
 	setStyles(config.styles)
+	setPageLabels()
 })()
 
 function setTitle() {
@@ -104,4 +105,40 @@ function setStyles(styles, parentKey = "") {
 		return false
 	}
 	return true
+}
+
+function setPageLabels() {
+	const sidebarMap = {}
+	if (config.sidebarLinks) {
+		for (const link of config.sidebarLinks) {
+			const page = link.href.split("/").pop().replace(".html", "")
+			sidebarMap[page] = link.title
+		}
+	}
+
+	const pathname = window.location.pathname
+	let pageKey = ""
+	if (isLoginPage) {
+		pageKey = "login"
+	} else {
+		const filename = pathname.split("/").pop().replace(".html", "")
+		pageKey = filename.replace(/-([a-z])/g, (_, c) => c.toUpperCase())
+	}
+
+	let label = null
+	if (config.pageLabels && config.pageLabels[pageKey]) {
+		label = config.pageLabels[pageKey]
+	} else if (sidebarMap[pageKey]) {
+		label = sidebarMap[pageKey]
+	}
+
+	if (!label) return
+
+	if (isLoginPage) {
+		const loginTitle = document.querySelector(".login-title")
+		if (loginTitle) loginTitle.textContent = label
+	} else {
+		const heading = document.querySelector(".section-title h1")
+		if (heading) heading.textContent = label
+	}
 }
