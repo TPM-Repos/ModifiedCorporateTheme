@@ -32,6 +32,10 @@ const config = {
 		specLimitOnPage: 10,
 		dateOrder: "desc",
 		showRunningSpecs: false,
+		archivedSpecs: {
+			showToggle: true, // Show toggle button on the history page
+			defaultVisibility: false, // Default: hide archived specs. If showToggle is false, this controls visibility permanently.
+		},
 	},
 	project: {
 		// you may put "logout" instead of a page location
@@ -54,22 +58,14 @@ const config = {
 		},
 	},
 	projects: {
-		// Hide specific projects by their group alias
-		toHide: [
-			{alias: "Group Alias"},
-		],
-		// add additional links to the projects page
-		toAdd: [
-			{
-				alias: "Group Alias",
-				description: "Optional description",
-				image: "dist/img/logo-dark.svg",
-				// this could be an internal link like this
-				link: "run.html?project=Jib Cranes&DWMacroQuickLaunch=700Series",
-				// or an external link like this
-				// link: "https://www.google.com",
-			},
-		],
+		// Custom order for projects on the projects page.
+		// Projects listed here appear first, followed by remaining projects.
+		// Use the project alias or name as it appears in DriveWorks.
+		customOrder: [],
+		// (Optional) Hide specific projects by alias or name
+		// toHide: ["ProjectAliasOrName"],
+		// (Optional) Add custom link cards to the project list
+		// toAdd: [{ name: "Custom Link", alias: "custom", description: "A custom card", absoluteImagePath: "" }],
 	},
 	// (Optional) Configure 'Details' view
 	details: {
