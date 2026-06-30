@@ -6,17 +6,22 @@
 const defaultLimit = config.history.specLimitOnPage ?? 10
 const defaultDateOrder = config.history.dateOrder ?? "desc"
 const defaultRunningSpecVisibility = config.history.showRunningSpecs ?? false
+const archivedSpecConfig = config.history.archivedSpecs ?? { showToggle: false, defaultVisibility: false }
+const defaultArchivedSpecVisibility = archivedSpecConfig.defaultVisibility ?? false
+const showArchivedToggle = archivedSpecConfig.showToggle ?? false
 let renderedProperties = []
 
 const storageKeyName = "historyFilterName"
 const storageKeyDateOrder = "historyDateOrder"
 const storageKeyRunningSpecVisibility = "historyRunningSpecVisibility"
+const storageKeyArchivedSpecVisibility = "historyArchivedSpecVisibility"
 const storageKeyPosition = "historyPosition"
 
 const historyList = document.getElementById("history-content")
 const nameFilterInput = document.getElementById("name-filter-input")
 const dateOrderToggle = document.getElementById("date-order-toggle")
 const runningSpecToggle = document.getElementById("running-spec-toggle")
+const archivedSpecToggle = document.getElementById("archived-spec-toggle")
 const expandToggle = document.getElementById("expand-toggle")
 const resetButton = document.getElementById("filter-reset-button")
 
@@ -24,6 +29,13 @@ let filterDateOrder =
 	localStorage.getItem(storageKeyDateOrder) ?? defaultDateOrder
 let storedRunningSpecVisibility = localStorage.getItem(storageKeyRunningSpecVisibility)
 let runningSpecVisibility = storedRunningSpecVisibility !== null ? storedRunningSpecVisibility === "true" : defaultRunningSpecVisibility
+let archivedSpecVisibility
+if (showArchivedToggle) {
+	const storedArchivedSpecVisibility = localStorage.getItem(storageKeyArchivedSpecVisibility)
+	archivedSpecVisibility = storedArchivedSpecVisibility !== null ? storedArchivedSpecVisibility === "true" : defaultArchivedSpecVisibility
+} else {
+	archivedSpecVisibility = defaultArchivedSpecVisibility
+}
 let isLoadingHistory = false
 let blockLazyLoading = false
 let expandedView = false
@@ -41,6 +53,12 @@ function startPageFunctions() {
 
 	// Update filter UI to mirror stored values
 	setDateOrderToggleState(filterDateOrder)
+
+	if (!showArchivedToggle) {
+		archivedSpecToggle.style.display = "none"
+	} else {
+		setArchivedSpecToggleState(archivedSpecVisibility)
+	}
 
 	// Get last stored query
 	const oDataQueryString = getStoredQuery()
@@ -89,16 +107,21 @@ function getStoredQuery(top, skip) {
 	// Get date order
 	query += `&$orderby=DateEdited ${filterDateOrder}`
 
-	// Filter out running Specifications
+	// Build filter parts
+	const filterParts = []
 	if (!runningSpecVisibility) {
-		query += "&$filter=StateType ne 'Running'"
+		filterParts.push("StateType ne 'Running'")
 	}
-
-	// Get name filter
+	if (!archivedSpecVisibility) {
+		filterParts.push("isArchived eq false")
+	}
 	const filterName = localStorage.getItem(storageKeyName)
 	if (filterName) {
-		query += ` and contains(tolower(name), tolower('${escapeStringForOData(filterName)}'))`
+		filterParts.push(`contains(tolower(name), tolower('${escapeStringForOData(filterName)}'))`)
 		nameFilterInput.value = filterName
+	}
+	if (filterParts.length > 0) {
+		query += "&$filter=" + filterParts.join(" and ")
 	}
 
 	return query
@@ -324,13 +347,14 @@ async function filterSpecificationsByName(name) {
 			localStorage.getItem(storageKeyDateOrder) ?? defaultDateOrder
 
 		// Create OData filter (contains name)
-		let query = `$filter=contains(tolower(name), tolower('${escapeStringForOData(
-			name,
-		)}'))`
+		const filterParts = [`contains(tolower(name), tolower('${escapeStringForOData(name)}'))`]
 		if (!runningSpecVisibility) {
-			query += ` and StateType ne 'Running'`
+			filterParts.push("StateType ne 'Running'")
 		}
-		query += `&$orderby=DateEdited ${currentDateOrder}&$top=${defaultLimit}`
+		if (!archivedSpecVisibility) {
+			filterParts.push("isArchived eq false")
+		}
+		let query = `$filter=${filterParts.join(" and ")}&$orderby=DateEdited ${currentDateOrder}&$top=${defaultLimit}`
 
 		// Reset stage
 		resetFilterPosition()
@@ -385,6 +409,9 @@ dateOrderToggle.onclick = () => {
 	if (!runningSpecVisibility) {
 		filterParts.push("StateType ne 'Running'")
 	}
+	if (!archivedSpecVisibility) {
+		filterParts.push("isArchived eq false")
+	}
 	const filterName = localStorage.getItem(storageKeyName)
 	if (filterName) {
 		filterParts.push("contains(tolower(name), tolower('" + escapeStringForOData(filterName) + "'))")
@@ -422,6 +449,25 @@ runningSpecToggle.onclick = () => {
 	localStorage.setItem(storageKeyRunningSpecVisibility, runningSpecVisibility)
 }
 
+archivedSpecToggle.onclick = () => {
+	// Show loading state
+	document.body.classList.add("is-loading")
+	window.scroll(0, 0)
+
+	// Toggle visibility
+	archivedSpecVisibility = !archivedSpecVisibility
+	setArchivedSpecToggleState(archivedSpecVisibility)
+
+	// Reset stage
+	resetFilterPosition()
+
+	// Re-render
+	getSpecificationsWithQuery(getStoredQuery(), true)
+
+	// Stored new visibility state
+	localStorage.setItem(storageKeyArchivedSpecVisibility, archivedSpecVisibility)
+}
+
 /**
  * Set date order toggle state.
  *
@@ -448,6 +494,19 @@ function setRunningSpecToggleState(visibility) {
 
 	// switch the icon between eye-open and eye-closed
 	runningSpecToggle.querySelector(".icon.eye").innerHTML = visibility ?
+		`<use xlink:href="dist/icons.svg#eye-open" />` :
+		`<use xlink:href="dist/icons.svg#eye-closed" />`
+}
+
+/**
+ * Set archived spec toggle state.
+ *
+ * @param {boolean} visibility - Toggle state
+ */
+function setArchivedSpecToggleState(visibility) {
+	archivedSpecToggle.querySelector("span").innerHTML = (visibility ? "Hide" : "Show") + " Archived Specifications"
+
+	archivedSpecToggle.querySelector(".icon.eye").innerHTML = visibility ?
 		`<use xlink:href="dist/icons.svg#eye-open" />` :
 		`<use xlink:href="dist/icons.svg#eye-closed" />`
 }
@@ -511,6 +570,7 @@ resetButton.onclick = () => {
 	localStorage.removeItem(storageKeyName)
 	localStorage.removeItem(storageKeyDateOrder)
 	localStorage.removeItem(storageKeyPosition)
+	localStorage.removeItem(storageKeyArchivedSpecVisibility)
 
 	// Clear input
 	nameFilterInput.value = ""
@@ -522,6 +582,12 @@ resetButton.onclick = () => {
 	// Reset order state
 	filterDateOrder = defaultDateOrder
 	setDateOrderToggleState(filterDateOrder)
+
+	// Reset archived state
+	archivedSpecVisibility = defaultArchivedSpecVisibility
+	if (showArchivedToggle) {
+		setArchivedSpecToggleState(archivedSpecVisibility)
+	}
 
 	// Allow lazy loading
 	blockLazyLoading = false
