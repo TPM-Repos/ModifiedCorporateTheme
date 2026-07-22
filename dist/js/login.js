@@ -1,4 +1,4 @@
-// Version 1.3.1
+// Version 1.3.7
 /**
  * LOGIN
  */
@@ -23,7 +23,7 @@ const loginCover = document.querySelector(".login-cover")
 const loginButton = document.getElementById("login-button")
 const loginGuest = document.getElementById("login-guest-button")
 const loginSSOButton = document.getElementById("login-sso-button")
-const loginNotice = document.getElementById("login-notice")
+const loginNotices = document.getElementById("login-notices")
 const forgotLink = document.getElementById("forgot-link")
 const createAccountButton = document.getElementById("create-account-button")
 const copyright = document.querySelector(".login-copyright")
@@ -35,8 +35,13 @@ const loginDivider = document.querySelector(".login-divider")
 
 // Error Messages
 const genericErrorMessage = "Unable to login."
-const clientErrorMessage = "Cannot access client."
+const clientErrorMessage = "There is an issue with the API site. Please contact your system administrator."
 const privateErrorMessage = "Please use a non-private window."
+const authErrorMessage = "Incorrect username or password."
+const maxSessionsErrorMessage = "The maximum number of sessions has been reached. Please try again later."
+const licensingServerWarningMessage = "Warning: Unable to verify licensing. License Info Server is unreachable. Please contact your system administrator."
+const licensingServerLoginErrorMessage = "Unable to login. This may be a licensing issue. Please contact your system administrator."
+const noLicensingErrorMessage = "No licensing available. Please contact your system administrator."
 
 // Global variables
 let interval;
@@ -142,14 +147,19 @@ async function dwClientLoaded() {
 /**
  * Start page functions.
  */
-function startPageFunctions() {
+async function startPageFunctions() {
 	try {
 		// Check if logged in, and redirect
-		checkExistingLogin()
+		await checkExistingLogin()
 	} catch (error) {
 		handleGenericError(error)
 	}
 	removeSkeleton()
+
+	const licenseResult = await checkLicenseStatus()
+	if (licenseResult) {
+		addLoginNotice(licenseResult.message, licenseResult.state)
+	}
 }
 
 async function login(type) {
@@ -162,7 +172,7 @@ async function login(type) {
 	try {
 		// Show loading state, reset notice
 		loginButton.classList.add("is-loading")
-		hideLoginNotice()
+		clearLoginNotices()
 
 		let result = null
 		let inputUsername = null
@@ -195,7 +205,18 @@ async function login(type) {
 
 		loginSuccess(result, inputUsername)
 	} catch (error) {
-		loginError(genericErrorMessage, error)
+		handleGenericError(error)
+		loginButton.classList.remove("is-loading")
+		clearLoginNotices()
+
+		const licenseResult = await checkLicenseStatus(true)
+		if (licenseResult) {
+			addLoginNotice(licenseResult.message, licenseResult.state)
+		} else if (isAuthError(error)) {
+			addLoginNotice(authErrorMessage, "error")
+		} else {
+			addLoginNotice(genericErrorMessage, "error")
+		}
 	}
 }
 
@@ -276,12 +297,24 @@ function loginError(noticeText, error = null) {
 	loginButton.classList.remove("is-loading")
 
 	// Show client error
-	setLoginNotice(noticeText, "error")
-	showLoginNotice()
+	addLoginNotice(noticeText, "error")
 }
 
 /**
- * Set login screen notice.
+ * Add a notice to the login form.
+ *
+ * @param {string} text - The message to display.
+ * @param {string} [state] - The type of message state (error/success/warning/neutral).
+ */
+function addLoginNotice(text, state = "neutral") {
+	const notice = document.createElement("div")
+	notice.className = `login-notice ${state}`
+	notice.innerText = text
+	loginNotices.appendChild(notice)
+}
+
+/**
+ * Set login screen notice in localStorage (for display after redirect).
  *
  * @param {string} text - The message to display when directed to the login screen.
  * @param {string} [state] - The type of message state (error/success/info).
@@ -292,7 +325,7 @@ function setLoginNotice(text, state = "info") {
 }
 
 /**
- * Show notice on login form.
+ * Show notice from localStorage on login form.
  */
 function showLoginNotice() {
 	const notice = JSON.parse(localStorage.getItem("loginNotice"))
@@ -301,26 +334,17 @@ function showLoginNotice() {
 		return
 	}
 
-	let state = notice.state
-
-	if (!state) {
-		state = "neutral"
-	}
-
-	// Display feedback
-	loginNotice.innerText = notice.text
-	loginNotice.classList.remove("error", "success", "neutral")
-	loginNotice.classList.add(state, "is-shown")
+	addLoginNotice(notice.text, notice.state || "neutral")
 
 	// Clear message
 	localStorage.removeItem("loginNotice")
 }
 
 /**
- * Hide notice on login form.
+ * Clear all notices from the login form.
  */
-function hideLoginNotice() {
-	loginNotice.classList.remove("is-shown")
+function clearLoginNotices() {
+	loginNotices.innerHTML = ""
 }
 
 /**
@@ -407,6 +431,64 @@ function localStorageSupported() {
 		return true
 	} catch (e) {
 		return false
+	}
+}
+
+/**
+ * Check if an error is an authentication/credentials error.
+ */
+function isAuthError(error) {
+	const status = error?.status || error?.response?.status
+	if (status === 401 || status === 403) {
+		return true
+	}
+
+	const message = (error?.message || error?.statusText || String(error)).toLowerCase()
+	return message.includes("401") || message.includes("403") || message.includes("unauthorized") || message.includes("forbidden")
+}
+
+/**
+ * Check license server status to provide a specific error message.
+ * @param {boolean} isLoginFailure - true when called after a failed login attempt, false on page load.
+ * Returns { message, state } or null if license checking is not configured or status is OK.
+ */
+async function checkLicenseStatus(isLoginFailure = false) {
+	const licenseUrl = config.license?.licenseDataUrl
+	if (!licenseUrl) {
+		return null
+	}
+
+	try {
+		const response = await fetch(licenseUrl + "/info")
+		if (!response.ok) {
+			return isLoginFailure
+				? { message: licensingServerLoginErrorMessage, state: "error" }
+				: { message: licensingServerWarningMessage, state: "warning" }
+		}
+
+		const data = await response.json()
+		const majorVersion = config.license?.driveWorksMajorVersion
+		const versionData = data.find(v => v.driveWorksMajorVersion === majorVersion)
+
+		if (!versionData) {
+			return { message: noLicensingErrorMessage, state: "error" }
+		}
+
+		if (versionData.maxConcurrentUsers === 0) {
+			return { message: noLicensingErrorMessage, state: "error" }
+		}
+
+		const capacity = versionData.maxConcurrentUsers + (versionData.onDemandCap || 0)
+		if (versionData.activeSessionsCount >= capacity) {
+			return { message: maxSessionsErrorMessage, state: "error" }
+		}
+
+		return null
+	} catch (error) {
+		handleGenericError(error)
+		return isLoginFailure
+			? { message: licensingServerLoginErrorMessage, state: "error" }
+			: { message: licensingServerWarningMessage, state: "warning" }
 	}
 }
 

@@ -120,6 +120,14 @@ const config = {
 		minute: "numeric",
 		hour12: true,
 	},
+	// (Optional) License server monitoring for detailed login error messages
+	// Set licenseDataUrl to enable. If empty or not set, login errors will show generic messages.
+	// licenseDataUrl should point to the reverse proxy path for your DriveWorks Live Floating License Server
+	// driveWorksMajorVersion should match the major version of DriveWorks your group uses
+	license: {
+		licenseDataUrl: "",
+		driveWorksMajorVersion: 22,
+	},
 	// Whether to show debugging information in the console
 	debug: false,
 	allowSingleSignOn: false,

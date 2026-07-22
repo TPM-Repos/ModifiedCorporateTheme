@@ -99,17 +99,20 @@ button:disabled:hover {
 	display: none;
 }
 
+.login-notices {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+	width: 100%;
+}
+
 .login-notice {
-	display: none;
+	display: inline-block;
 	padding: 0.5em 0.75em;
 	margin: 0 auto;
 	background-color: var(--color-neutral);
 	color: #fff;
 	border-radius: var(--inputRadius);
-}
-
-.login-notice.is-shown {
-	display: inline-block;
 }
 
 .login-notice.error {
@@ -118,6 +121,10 @@ button:disabled:hover {
 
 .login-notice.success {
 	background-color: var(--color-success);
+}
+
+.login-notice.warning {
+	background-color: #e6a817;
 }
 
 .login-logo {
